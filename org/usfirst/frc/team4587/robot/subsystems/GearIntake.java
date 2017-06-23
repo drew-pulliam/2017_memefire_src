@@ -45,15 +45,10 @@ public class GearIntake extends Subsystem implements LogDataSource {
     	
     }
     public boolean isStalling(){
-    	return Robot.getPDP().getCurrent(RobotMap.PDP_PORT_GEAR_INTAKE_MOTOR) >= 25;
+    	return Robot.getPDP().getCurrent(RobotMap.PDP_PORT_GEAR_INTAKE_MOTOR) >= RobotMap.GEAR_INTAKE_STALL_CURRENT;
     	//return false;
     }
 
-    private DigitalInput m_gearIntakeSwitch;
-    public boolean getGearIntakeSwitch()
-    {
-    	return m_gearIntakeSwitch.get();
-    }
     private boolean m_motorOn;
     public boolean motorOn()
     {
@@ -119,7 +114,6 @@ public class GearIntake extends Subsystem implements LogDataSource {
         m_gearIntakeMotor = new Spark(RobotMap.MOTOR_GEAR_INTAKE);
         m_gearIntakePiston = new Solenoid(RobotMap.SOLENOID_GEAR_INTAKE);
 
-        m_gearIntakeSwitch = new DigitalInput(RobotMap.SWITCH_GEAR_INTAKE_LIMIT);
         m_motorOn = false;
     }
     
@@ -131,7 +125,6 @@ public class GearIntake extends Subsystem implements LogDataSource {
     
     public void gatherValues( ValueLogger logger)
     {
-    	logger.logBooleanValue("Intake Switch", getGearIntakeSwitch());
     	//m_gearIntakeMotor.gatherValues(logger);
     }
 

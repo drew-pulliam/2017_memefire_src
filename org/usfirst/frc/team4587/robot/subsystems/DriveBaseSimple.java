@@ -23,25 +23,29 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.\
 	private SpeedController left0;//23
-	//private SpeedController left1;
-	//private SpeedController left2;
+	private SpeedController left1;
+	private SpeedController left2;
 	private SpeedController right0;//01
-	//private SpeedController right1;
+	private SpeedController right1;
+	private SpeedController right2;
 	
 	private RobotDrive drive0;
-	//private RobotDrive drive1;
+	private RobotDrive drive1;
+	private RobotDrive drive2;
 	public Encoder m_encoderRight, m_encoderLeft;
 	
 	public DriveBaseSimple()
 	{
 		left0 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN);
-		//left1 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
-		//left2 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
+		left1 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
+		left2 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
 		right0 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN);
-		//right1 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
+		right1 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
+		right2 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN_3);
 		
 		drive0 = new RobotDrive(left0, right0);
-		//drive1 = new RobotDrive(left1, right1);
+		drive1 = new RobotDrive(left1, right1);
+		drive2 = new RobotDrive(left2, right2);
 		
 		m_encoderLeft = new Encoder(RobotMap.ENCODER_LEFT_DRIVE_A, 
 				RobotMap.ENCODER_LEFT_DRIVE_B);
@@ -52,10 +56,11 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	
 	public void setLeftRightPower(double leftPower, double rightPower) {
 	    left0.set(leftPower);
+	    left1.set(leftPower);
+	    left2.set(leftPower);
 	    right0.set(rightPower);
-	    //left1.set(leftPower);
-	    //right1.set(rightPower);
-	    //left2.set(leftPower);
+	    right1.set(rightPower);
+	    right2.set(rightPower);
 	  }
 	
 	public void resetEncoders()
@@ -67,13 +72,15 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	public void setLeftMotor(double speed)
 	{
 		left0.set(speed);
-		//left1.set(speed);
+		left1.set(speed);
+		left2.set(speed);
 	}
 	
 	public void setRightMotor(double speed)
 	{
 		right0.set(speed*-1);
-		//right1.set(speed*-1);
+		right1.set(speed*-1);
+		right2.set(speed*-1);
 	}
 	
 	public int getEncoderLeft()
@@ -89,7 +96,8 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	public void arcadeDrive(double drive, double turn)
 	{
 		drive0.arcadeDrive(drive, turn*-1);
-		//drive1.arcadeDrive(drive, turn*-1);
+		drive1.arcadeDrive(drive, turn*-1);
+		drive2.arcadeDrive(drive, turn*-1);
 	}
 	
 	public double straightDistanceTraveled(int startLeft, int startRight)

@@ -26,15 +26,9 @@ import org.usfirst.frc.team4587.robot.commands.AutoGearSide1;
 import org.usfirst.frc.team4587.robot.commands.AutoMobility;
 import org.usfirst.frc.team4587.robot.commands.HopperAuto;
 import org.usfirst.frc.team4587.robot.commands.HopperAutoSimple;
-import org.usfirst.frc.team4587.robot.commands.SetScytheAndShintake;
-import org.usfirst.frc.team4587.robot.commands.TurnTurretDegrees;
 import org.usfirst.frc.team4587.robot.subsystems.DriveBaseSimple;
-import org.usfirst.frc.team4587.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4587.robot.subsystems.FlywheelPID;
 import org.usfirst.frc.team4587.robot.subsystems.GearIntake;
-import org.usfirst.frc.team4587.robot.subsystems.IndexerPID;
-import org.usfirst.frc.team4587.robot.subsystems.Turret;
-import org.usfirst.frc.team4587.robot.subsystems.TurretPID;
 import org.usfirst.frc.team4587.robot.subsystems.*;
 
 /**
@@ -57,35 +51,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		return m_oi;
 	}
 
-	private static TurretPID m_turret;
-	public static TurretPID getTurret()
-	{
-		return m_turret;
-	}
-	private static TurretSimple m_turretSimple;
-	public static TurretSimple getTurretSimple()
-	{
-		return m_turretSimple;
-	}
 	private static FlywheelPID m_flywheel;
 	public static FlywheelPID getFlywheel()
 	{
 		return m_flywheel;
-	}
-	/*private static FlywheelSimple m_flywheel;
-	public static FlywheelSimple getFlywheel()
-	{
-		return m_flywheel;
-	}*/
-	private static ScytheAndShintake m_scytheAndShintake;
-	public static ScytheAndShintake getScytheAndShintake()
-	{
-		return m_scytheAndShintake;
-	}
-	private static IndexerPID m_indexer;
-	public static IndexerPID getIndexer()
-	{
-		return m_indexer;
 	}
 	
 	private static GearIntake m_gearIntake;
@@ -98,11 +67,17 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	{
 		return m_ballIntake;
 	}
-	private static HopperAndShintake m_hopperAndShintake;
-	public static HopperAndShintake getHopperAndShintake()
+	private static Feeder m_feeder;
+	public static Feeder getFeeder()
 	{
-		return m_hopperAndShintake;
+		return m_feeder;
 	}
+	private static HotDogs m_hotDogs;
+	public static HotDogs getHotDogs()
+	{
+		return m_hotDogs;
+	}
+	
 	
 	private static DriveBaseSimple m_driveBaseSimple;
 	public static DriveBaseSimple getDriveBaseSimple()
@@ -140,19 +115,16 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_robot = this;
 		//m_turret = new TurretPID();
 		
-		m_turretSimple = new TurretSimple();
-		m_flywheel = new FlywheelPID();
-		//m_scytheAndShintake = new ScytheAndShintake();
-		//m_indexer = new IndexerPID();
 		Compressor compressor = new Compressor(0);
 		//compressor.start();
-    	m_gearIntake = new GearIntake();
     	m_ballIntake = new BallIntake();
-    	m_hopperAndShintake = new HopperAndShintake();
-		//m_driveBase = new DriveBase();
+		m_climbMotor = new ClimbMotor();;
 		m_driveBaseSimple = new DriveBaseSimple();
+		m_feeder = new Feeder();
+		m_flywheel = new FlywheelPID();
+    	m_gearIntake = new GearIntake();
+		m_hotDogs = new HotDogs();
 		//m_gearCameraThread = new GearCameraThread();
-		m_climbMotor = new ClimbMotor();
 		m_PDP = new PowerDistributionPanel();
 		
 		Bling.initialize();
@@ -289,9 +261,6 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		
-		Robot.getHopperAndShintake().setHopperMotor(0.0);
-		Robot.getHopperAndShintake().setShintakeMotor(0.0);
-		Robot.getHopperAndShintake().hopperIn();
 		
 		System.out.println("init");
 		//m_turret.enable();
@@ -343,7 +312,6 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		SmartDashboard.putNumber("Gyro Yaw",Gyro.getYaw());
 		SmartDashboard.putBoolean("Is Running", m_flywheel.running());
 		SmartDashboard.putNumber("Flywheel Encoder", m_flywheel.getEncoder().get());
-		SmartDashboard.putBoolean("gear intake limit", m_gearIntake.getGearIntakeSwitch());
 		//SmartDashboard.putNumber("Turret Motor", m_turret.getTurretMotorActual());
 		/*if (m_gearIntake.getGearIntakeSwitch() == false)
     	{

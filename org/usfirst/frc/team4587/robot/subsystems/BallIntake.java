@@ -23,13 +23,20 @@ public class BallIntake extends Subsystem implements LogDataSource {
     // here. Call these from Commands.
 
 	private SpeedController m_ballIntakeMotor;
+	private SpeedController m_ballIntakeMotor2;
     public void setBallIntakeMotor(double x)
     {
     	m_ballIntakeMotor.set(-1 * x);
+    	m_ballIntakeMotor2.set(-1 * x);
     	m_motorOn = !(Math.abs(x) < 0.01);
     	
     }
 
+    private Solenoid m_ballIntakePiston;
+    public void setBallIntakePiston(boolean x){
+    	m_ballIntakePiston.set(x);
+    }
+    
     private boolean m_motorOn;
     public boolean motorOn()
     {
@@ -41,6 +48,8 @@ public class BallIntake extends Subsystem implements LogDataSource {
     public BallIntake()
     {    	
         m_ballIntakeMotor = new Spark(RobotMap.MOTOR_BALL_INTAKE);
+        m_ballIntakeMotor2 = new Spark(RobotMap.MOTOR_BALL_INTAKE_2);
+        m_ballIntakePiston = new Solenoid(RobotMap.SOLENOID_BALL_INTAKE);
         m_motorOn = false;
     }
     

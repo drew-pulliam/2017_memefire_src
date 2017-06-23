@@ -101,7 +101,7 @@ public class OI implements LogDataSource {
     	buttonX2.whenPressed(new ToggleFlywheelRunning(true,2900));// 3040, 3070
     	buttonY2.whenPressed(new ToggleFlywheelRunning(false,0));
     	leftBumper2.whenPressed(new BallIntakeOn());
-    	rightBumper2.whenPressed(new ToggleHopperInOut());
+    	//rightBumper2.whenPressed(new ToggleHopperInOut());
     	leftTrigger2.whenPressed(new BallIntakeUnJam());
     	rightTrigger2.whenPressed(new BallIntakeOut());
     	

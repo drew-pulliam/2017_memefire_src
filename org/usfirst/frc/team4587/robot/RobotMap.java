@@ -11,6 +11,8 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
+	public static final int PDP_PORT_GEAR_INTAKE_MOTOR = 7;
+	public static final int GEAR_INTAKE_STALL_CURRENT = 25;
 
 	public static final int MOTOR_RIGHT_DRIVETRAIN = 0;
 	public static final int MOTOR_RIGHT_DRIVETRAIN_2 = 10;
@@ -23,7 +25,6 @@ public class RobotMap {
 	public static final int MOTOR_FLYWHEEL_1 = 3;
 	public static final int MOTOR_FLYWHEEL_2 = 15;
 	public static final int MOTOR_GEAR_INTAKE = 4;
-	public static final int PDP_PORT_GEAR_INTAKE_MOTOR = 7;
 	public static final int MOTOR_BALL_INTAKE = 5;
 	public static final int MOTOR_BALL_INTAKE_2 = 16;
 	public static final int MOTOR_HOTDOGS_1 = 6;

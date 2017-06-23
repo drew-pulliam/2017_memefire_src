@@ -16,35 +16,21 @@ import utility.RampedSpeedController.ControllerType;
 /**
  *
  */
-public class ClimbMotor extends Subsystem {
+public class Feeder extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	private SpeedController m_climbMotor0;
-	private SpeedController m_climbMotor1;
+	private SpeedController m_feederMotor;
 	private boolean m_isClimbing = false;
-	public void startClimb()
+	public void setFeederMotor(double x)
 	{
-		m_climbMotor0.set(1);
-		m_climbMotor1.set(1);
-	}
-	public void stopClimb()
-	{
-		m_climbMotor0.set(0);
-		m_climbMotor1.set(0);
-	}
-	public boolean isClimbing(){
-		return m_isClimbing;
-	}
-	public void setClimbing(boolean climbing){
-		m_isClimbing = climbing;
+		m_feederMotor.set(x);
 	}
 
-    public ClimbMotor()
+    public Feeder()
     {    	
-    	m_climbMotor0 = new VictorSP(RobotMap.MOTOR_CLIMB_1);
-    	m_climbMotor1 = new Spark(RobotMap.MOTOR_CLIMB_2);
+    	m_feederMotor = new VictorSP(RobotMap.MOTOR_FEEDER);
     }
     
     public void initDefaultCommand() {

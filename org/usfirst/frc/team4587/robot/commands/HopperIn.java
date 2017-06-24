@@ -11,13 +11,13 @@ public class HopperIn extends Command {
 
 
     public HopperIn() {
-    	requires(Robot.getHopperAndShintake());
+    	requires(Robot.getHopperPiston());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	Robot.getHopperAndShintake().hopperIn();//out = true
+    	Robot.getHopperPiston().hopperIn();//out = true
     }
 
     // Called repeatedly when this Command is scheduled to run

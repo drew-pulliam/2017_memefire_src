@@ -24,8 +24,7 @@ import org.usfirst.frc.team4587.robot.commands.AutoGearCenter;
 import org.usfirst.frc.team4587.robot.commands.AutoGearSide;
 import org.usfirst.frc.team4587.robot.commands.AutoGearSide1;
 import org.usfirst.frc.team4587.robot.commands.AutoMobility;
-import org.usfirst.frc.team4587.robot.commands.HopperAuto;
-import org.usfirst.frc.team4587.robot.commands.HopperAutoSimple;
+import org.usfirst.frc.team4587.robot.commands.AutonomousTRI;
 import org.usfirst.frc.team4587.robot.subsystems.DriveBaseSimple;
 import org.usfirst.frc.team4587.robot.subsystems.FlywheelPID;
 import org.usfirst.frc.team4587.robot.subsystems.GearIntake;
@@ -77,6 +76,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	{
 		return m_hotDogs;
 	}
+	private static HopperPiston m_hopperPiston;
+	public static HopperPiston getHopperPiston(){
+		return m_hopperPiston;
+	}
 	
 	
 	private static DriveBaseSimple m_driveBaseSimple;
@@ -124,6 +127,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_flywheel = new FlywheelPID();
     	m_gearIntake = new GearIntake();
 		m_hotDogs = new HotDogs();
+		m_hopperPiston = new HopperPiston();
 		//m_gearCameraThread = new GearCameraThread();
 		m_PDP = new PowerDistributionPanel();
 		
@@ -224,7 +228,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		
 		//autonomousCommand = new AutoGearSide1("right");
 		//autonomousCommand = new AutoGearCenter();
-		autonomousCommand = new HopperAuto("blue");
+		//autonomousCommand = new HopperAuto("blue");
+		autonomousCommand = new AutonomousTRI();
 		
 		//autonomousCommand = new AutoMobility();
 		/*

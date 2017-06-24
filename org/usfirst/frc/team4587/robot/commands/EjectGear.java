@@ -56,6 +56,7 @@ public class EjectGear extends Command {
     	Robot.getGearIntake().setGearIntakeMotor(0.0);
     	//Robot.getGearIntake().gearIntakeUp();
     	Robot.getDriveBaseSimple().arcadeDrive(0.0, 0.0);
+    	Robot.getGearIntake().gearIntakeUp();
     	Robot.getGearIntake().setLEDMode();
     }
 

@@ -24,7 +24,6 @@ public class ClimbMotorToggle extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	end = true;
-    	Robot.getHopperAndShintake().hopperIn();
     	if(Robot.getClimbMotor().isClimbing())
     	{
     		Robot.getClimbMotor().stopClimb();
@@ -55,6 +54,7 @@ public class ClimbMotorToggle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Bling.sendData((byte)69);
     }
 
     // Called when another command which requires one or more of the same

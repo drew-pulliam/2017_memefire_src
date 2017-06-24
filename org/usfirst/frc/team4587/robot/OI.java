@@ -87,7 +87,7 @@ public class OI implements LogDataSource {
     	//buttonX1.whenPressed(new ClimbMotorStart());
     	//buttonY1.whenPressed(new ClimbMotorStop());
     	//buttonB1.whenPressed(new DriveSimpleWithJoysticks());
-    	
+    	/*
     	buttonA1.whenPressed(new AutoGearIntakeMotors());
     	buttonB1.whenPressed(new ToggleGearIntakeMotors());
     	buttonX1.whenPressed(new BallIntakeOff());
@@ -96,7 +96,6 @@ public class OI implements LogDataSource {
     	leftBumper1.whenPressed(new ToggleGearIntakeUpDown());
     	leftTrigger1.whenPressed(new StartGearCamera());
     	
-    	buttonA2.whenPressed(new HopperOn());
     	buttonB2.whenPressed(new BallIntakeOff());
     	buttonX2.whenPressed(new ToggleFlywheelRunning(true,2900));// 3040, 3070
     	buttonY2.whenPressed(new ToggleFlywheelRunning(false,0));
@@ -104,7 +103,15 @@ public class OI implements LogDataSource {
     	//rightBumper2.whenPressed(new ToggleHopperInOut());
     	leftTrigger2.whenPressed(new BallIntakeUnJam());
     	rightTrigger2.whenPressed(new BallIntakeOut());
-    	
+    	*/
+    	buttonA1.whenPressed(new AutoGearIntakeMotors());
+    	buttonB1.whenPressed(new GearIntakeIdle());
+    	buttonX1.whenPressed(new BallIntakeOn());
+    	buttonY1.whenPressed(new BallIntakeOff());
+    	rightBumper1.whenPressed(new EjectGear());
+    	leftBumper1.whenPressed(new ClimbMotorToggle());
+    	//rightTrigger1.cancelWhenPressed(new SHOOT);
+    	leftTrigger1.whileHeld(new BallIntakeOut());
     	/*
     	buttonA1.whenPressed(new AutoGearSide1("left"));
     	buttonB1.whenPressed(new AutoGearSide1("right"));

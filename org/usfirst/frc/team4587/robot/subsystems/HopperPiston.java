@@ -22,9 +22,15 @@ public class HopperPiston extends Subsystem {
     // here. Call these from Commands.
 
 	private Solenoid m_hopperPiston;
-	public void setHopperPiston(boolean x)
+	/*public void setHopperPiston(boolean x)
 	{
 		m_hopperPiston.set(x);
+	}*/
+	public void hopperIn(){
+		m_hopperPiston.set(false);
+	}
+	public void hopperOut(){
+		m_hopperPiston.set(true);
 	}
 
     public HopperPiston()

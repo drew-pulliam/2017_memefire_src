@@ -33,8 +33,11 @@ public class BallIntake extends Subsystem implements LogDataSource {
     }
 
     private Solenoid m_ballIntakePiston;
-    public void setBallIntakePiston(boolean x){
+    /*public void setBallIntakePiston(boolean x){
     	m_ballIntakePiston.set(x);
+    }*/
+    public void lowerBallIntake(){
+    	m_ballIntakePiston.set(true);
     }
     
     private boolean m_motorOn;

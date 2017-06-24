@@ -12,14 +12,14 @@ public class BallIntakeUnJam extends Command {
 
     public BallIntakeUnJam() {
     	requires(Robot.getBallIntake());
-    	requires(Robot.getHopperAndShintake());
+    	requires(Robot.getHotDogs());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
     	Robot.getBallIntake().setBallIntakeMotor(-1.0);
-    	Robot.getHopperAndShintake().setHopperMotor(0.0);
+    	Robot.getHotDogs().setHotDogMotors(-1.0);
     	//Robot.getHopperAndShintake().setShintakeMotor(-1.0);
     }
 

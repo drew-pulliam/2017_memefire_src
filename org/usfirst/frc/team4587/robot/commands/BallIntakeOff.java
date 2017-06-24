@@ -12,15 +12,14 @@ public class BallIntakeOff extends Command {
 
     public BallIntakeOff() {
     	requires(Robot.getBallIntake());
-    	requires(Robot.getHopperAndShintake());
+    	requires(Robot.getHotDogs());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
     	Robot.getBallIntake().setBallIntakeMotor(0.0);
-    	Robot.getHopperAndShintake().setHopperMotor(0.0);
-    	Robot.getHopperAndShintake().setShintakeMotor(0.0);
+    	Robot.getHotDogs().setHotDogMotors(0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run

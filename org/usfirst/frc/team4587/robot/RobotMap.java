@@ -15,17 +15,17 @@ public class RobotMap {
 	public static final int GEAR_INTAKE_STALL_CURRENT = 25;
 
 	public static final int MOTOR_RIGHT_DRIVETRAIN = 0;
-	public static final int MOTOR_RIGHT_DRIVETRAIN_2 = 10;
-	public static final int MOTOR_RIGHT_DRIVETRAIN_3 = 11;
-	public static final int	MOTOR_LEFT_DRIVETRAIN = 1;
-	public static final int MOTOR_LEFT_DRIVETRAIN_2 = 12;
-	public static final int MOTOR_LEFT_DRIVETRAIN_3 = 13;
-	public static final int MOTOR_CLIMB_1 = 2;
+	public static final int MOTOR_RIGHT_DRIVETRAIN_2 = 1;
+	public static final int MOTOR_RIGHT_DRIVETRAIN_3 = 2;
+	public static final int	MOTOR_LEFT_DRIVETRAIN = 3;
+	public static final int MOTOR_LEFT_DRIVETRAIN_2 = 4;
+	public static final int MOTOR_LEFT_DRIVETRAIN_3 = 5;
+	public static final int MOTOR_CLIMB_1 = 10;
 	public static final int MOTOR_CLIMB_2 = 14;
-	public static final int MOTOR_FLYWHEEL_1 = 3;
+	public static final int MOTOR_FLYWHEEL_1 = 11;
 	public static final int MOTOR_FLYWHEEL_2 = 15;
-	public static final int MOTOR_GEAR_INTAKE = 4;
-	public static final int MOTOR_BALL_INTAKE = 5;
+	public static final int MOTOR_GEAR_INTAKE =12;
+	public static final int MOTOR_BALL_INTAKE = 13;
 	public static final int MOTOR_BALL_INTAKE_2 = 16;
 	public static final int MOTOR_HOTDOGS_1 = 6;
 	public static final int MOTOR_HOTDOGS_2 = 17;

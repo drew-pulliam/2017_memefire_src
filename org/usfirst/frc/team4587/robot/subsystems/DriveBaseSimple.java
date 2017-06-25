@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import utility.LogDataSource;
@@ -36,12 +37,12 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	
 	public DriveBaseSimple()
 	{
-		left0 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN);
-		left1 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
-		left2 = new Spark(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
-		right0 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN);
-		right1 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
-		right2 = new Spark(RobotMap.MOTOR_RIGHT_DRIVETRAIN_3);
+		left0 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN);
+		left1 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
+		left2 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
+		right0 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN);
+		right1 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
+		right2 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN_3);
 		
 		drive0 = new RobotDrive(left0, right0);
 		drive1 = new RobotDrive(left1, right1);
@@ -71,16 +72,16 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	
 	public void setLeftMotor(double speed)
 	{
-		left0.set(speed);
-		left1.set(speed);
-		left2.set(speed);
+		left0.set(speed*-1);
+		left1.set(speed*-1);
+		left2.set(speed*-1);
 	}
 	
 	public void setRightMotor(double speed)
 	{
-		right0.set(speed*-1);
-		right1.set(speed*-1);
-		right2.set(speed*-1);
+		right0.set(speed);
+		right1.set(speed);
+		right2.set(speed);
 	}
 	
 	public int getEncoderLeft()
@@ -95,9 +96,9 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 
 	public void arcadeDrive(double drive, double turn)
 	{
-		drive0.arcadeDrive(drive, turn*-1);
-		drive1.arcadeDrive(drive, turn*-1);
-		drive2.arcadeDrive(drive, turn*-1);
+		drive0.arcadeDrive(drive*-1, turn);
+		drive1.arcadeDrive(drive*-1, turn);
+		drive2.arcadeDrive(drive*-1, turn);
 	}
 	
 	public double straightDistanceTraveled(int startLeft, int startRight)
@@ -134,8 +135,8 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
-    	//setDefaultCommand(new DriveSimpleWithJoysticks());
-    	setDefaultCommand(new DriveCheesyWithJoysticks());
+    	setDefaultCommand(new DriveSimpleWithJoysticks());
+    	//setDefaultCommand(new DriveCheesyWithJoysticks());
     }
 }
 

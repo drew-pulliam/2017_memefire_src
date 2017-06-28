@@ -26,10 +26,10 @@ public class AutonomousTRI extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//addSequential(new AutonomousDriveStraightDistance(100, 0.55));
-    	addSequential(new RaiseGearIntake());
+    	//addSequential(new RaiseGearIntake());
     	addSequential(new LowerBallIntake());
     	addSequential(new HopperOut());
-    	addSequential(new FollowChezyPath("TRIPath", false, false,1,0.0));
+    	addSequential(new FollowChezyPath("TRIPath", true/*backwards*/, false,-1,0.0));
     	addSequential(new Delay(10));
     	addSequential(new EjectGear());
     	/*addSequential(new Delay(25));

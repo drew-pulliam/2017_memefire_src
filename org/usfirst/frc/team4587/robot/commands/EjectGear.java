@@ -34,10 +34,10 @@ public class EjectGear extends Command {
     	int encoder = Robot.getDriveBaseSimple().getEncoderLeft();
     	if(count > 5)
     	{
-        	Robot.getGearIntake().setGearIntakeMotor(-1.0);
-    		Robot.getDriveBaseSimple().arcadeDrive(-0.7, 0.0);
+        	Robot.getGearIntake().setGearIntakeMotor(1.0);
+    		Robot.getDriveBaseSimple().arcadeDrive(0.7, 0.0);
     	}
-    	if(encoder - encoderStart <= -150)
+    	if(encoder - encoderStart >= 150)
     	{
     		Robot.getDriveBaseSimple().arcadeDrive(0.05, 0.0);
     	}

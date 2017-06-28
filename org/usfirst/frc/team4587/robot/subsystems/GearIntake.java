@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import utility.Bling;
 import utility.LogDataSource;
@@ -111,7 +112,7 @@ public class GearIntake extends Subsystem implements LogDataSource {
 
     public GearIntake()
     {    	
-        m_gearIntakeMotor = new Spark(RobotMap.MOTOR_GEAR_INTAKE);
+        m_gearIntakeMotor = new VictorSP(RobotMap.MOTOR_GEAR_INTAKE);
         m_gearIntakePiston = new Solenoid(RobotMap.SOLENOID_GEAR_INTAKE);
 
         m_motorOn = false;

@@ -43,7 +43,7 @@ public class ClimbMotor extends Subsystem {
 
     public ClimbMotor()
     {    	
-    	m_climbMotor0 = new VictorSP(RobotMap.MOTOR_CLIMB_1);
+    	m_climbMotor0 = new Spark(RobotMap.MOTOR_CLIMB_1);
     	m_climbMotor1 = new Spark(RobotMap.MOTOR_CLIMB_2);
     }
     

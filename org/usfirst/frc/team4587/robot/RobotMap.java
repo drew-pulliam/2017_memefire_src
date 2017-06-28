@@ -11,7 +11,7 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
-	public static final int PDP_PORT_GEAR_INTAKE_MOTOR = 7;
+	public static final int PDP_PORT_GEAR_INTAKE_MOTOR = 11;
 	public static final int GEAR_INTAKE_STALL_CURRENT = 25;
 
 	public static final int MOTOR_RIGHT_DRIVETRAIN = 0;
@@ -20,15 +20,15 @@ public class RobotMap {
 	public static final int	MOTOR_LEFT_DRIVETRAIN = 3;
 	public static final int MOTOR_LEFT_DRIVETRAIN_2 = 4;
 	public static final int MOTOR_LEFT_DRIVETRAIN_3 = 5;
-	public static final int MOTOR_CLIMB_1 = 10;
-	public static final int MOTOR_CLIMB_2 = 14;
-	public static final int MOTOR_FLYWHEEL_1 = 11;
-	public static final int MOTOR_FLYWHEEL_2 = 15;
-	public static final int MOTOR_GEAR_INTAKE =12;
-	public static final int MOTOR_BALL_INTAKE = 13;
-	public static final int MOTOR_BALL_INTAKE_2 = 16;
-	public static final int MOTOR_HOTDOGS_1 = 6;
-	public static final int MOTOR_HOTDOGS_2 = 17;
+	public static final int MOTOR_CLIMB_1 = 14;
+	public static final int MOTOR_CLIMB_2 = 15;
+	public static final int MOTOR_FLYWHEEL_1 = 12; //11;
+	public static final int MOTOR_FLYWHEEL_2 = 13; //15;
+	public static final int MOTOR_GEAR_INTAKE = 6; //12;
+	public static final int MOTOR_BALL_INTAKE = 10; //13;
+	public static final int MOTOR_BALL_INTAKE_2 = 11; //16;
+	public static final int MOTOR_HOTDOGS_1 = 8; //6;
+	public static final int MOTOR_HOTDOGS_2 = 9; //17;
 	public static final int MOTOR_FEEDER = 7;
 
 	//

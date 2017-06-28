@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import utility.LogDataSource;
 import utility.RampedSpeedController;
@@ -50,8 +52,8 @@ public class BallIntake extends Subsystem implements LogDataSource {
 
     public BallIntake()
     {    	
-        m_ballIntakeMotor = new Spark(RobotMap.MOTOR_BALL_INTAKE);
-        m_ballIntakeMotor2 = new Spark(RobotMap.MOTOR_BALL_INTAKE_2);
+        m_ballIntakeMotor = new VictorSP(RobotMap.MOTOR_BALL_INTAKE);
+        m_ballIntakeMotor2 = new VictorSP(RobotMap.MOTOR_BALL_INTAKE_2);
         m_ballIntakePiston = new Solenoid(RobotMap.SOLENOID_BALL_INTAKE);
         m_motorOn = false;
     }

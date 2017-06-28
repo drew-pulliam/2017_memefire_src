@@ -31,7 +31,7 @@ public class HotDogs extends Subsystem {
     public HotDogs()
     {    	
     	m_hotDogMotor0 = new VictorSP(RobotMap.MOTOR_HOTDOGS_1);
-    	m_hotDogMotor1 = new Spark(RobotMap.MOTOR_HOTDOGS_2);
+    	m_hotDogMotor1 = new VictorSP(RobotMap.MOTOR_HOTDOGS_2);
     }
     
     public void initDefaultCommand() {

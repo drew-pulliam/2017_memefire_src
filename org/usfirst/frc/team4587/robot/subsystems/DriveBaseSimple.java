@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import utility.LogDataSource;
@@ -37,12 +38,12 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
 	
 	public DriveBaseSimple()
 	{
-		left0 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN);
-		left1 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
-		left2 = new Victor(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
-		right0 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN);
-		right1 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
-		right2 = new Victor(RobotMap.MOTOR_RIGHT_DRIVETRAIN_3);
+		left0 = new VictorSP(RobotMap.MOTOR_LEFT_DRIVETRAIN);
+		left1 = new VictorSP(RobotMap.MOTOR_LEFT_DRIVETRAIN_2);
+		left2 = new VictorSP(RobotMap.MOTOR_LEFT_DRIVETRAIN_3);
+		right0 = new VictorSP(RobotMap.MOTOR_RIGHT_DRIVETRAIN);
+		right1 = new VictorSP(RobotMap.MOTOR_RIGHT_DRIVETRAIN_2);
+		right2 = new VictorSP(RobotMap.MOTOR_RIGHT_DRIVETRAIN_3);
 		
 		drive0 = new RobotDrive(left0, right0);
 		drive1 = new RobotDrive(left1, right1);

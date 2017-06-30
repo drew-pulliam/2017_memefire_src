@@ -32,9 +32,9 @@ public class RobotMap {
 	public static final int MOTOR_FEEDER = 7;
 
 	//
-	public static final int SOLENOID_GEAR_INTAKE = 0;
-	public static final int SOLENOID_BALL_INTAKE = 1;
-	public static final int SOLENOID_HOPPER = 2;
+	public static final int SOLENOID_GEAR_INTAKE = 4;
+	public static final int SOLENOID_BALL_INTAKE = 5;
+	public static final int SOLENOID_HOPPER = 6;
 	//
 	public static final int ENCODER_FLYWHEEL_A = 9;
 	public static final int ENCODER_FLYWHEEL_B = 8;

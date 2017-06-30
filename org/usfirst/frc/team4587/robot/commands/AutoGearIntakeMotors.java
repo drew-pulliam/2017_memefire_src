@@ -22,6 +22,7 @@ public class AutoGearIntakeMotors extends Command {
     // Called just before this Command runs the first time
     protected void initialize() 
     {
+    	Robot.getGearIntake().gearIntakeDown();
     	Robot.getGearIntake().setGearIntakeMotor(-1.0);
     	count = 0;
     	finish = false;

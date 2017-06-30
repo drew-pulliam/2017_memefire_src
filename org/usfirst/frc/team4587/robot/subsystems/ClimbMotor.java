@@ -27,7 +27,7 @@ public class ClimbMotor extends Subsystem {
 	public void startClimb()
 	{
 		m_climbMotor0.set(1);
-		m_climbMotor1.set(1);
+		m_climbMotor1.set(-1);
 	}
 	public void stopClimb()
 	{

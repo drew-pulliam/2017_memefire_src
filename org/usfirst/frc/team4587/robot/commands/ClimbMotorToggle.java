@@ -38,7 +38,7 @@ public class ClimbMotorToggle extends Command {
     		Robot.getClimbMotor().startClimb();
     		Robot.getClimbMotor().setClimbing(true);
     		Bling.sendData((byte)65);
-    		end = false;
+    		//end = false;
     	}
     }
 

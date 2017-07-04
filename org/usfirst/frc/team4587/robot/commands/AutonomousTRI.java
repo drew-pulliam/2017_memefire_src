@@ -29,7 +29,7 @@ public class AutonomousTRI extends CommandGroup {
     	//addSequential(new RaiseGearIntake());
     	addSequential(new LowerBallIntake());
     	addSequential(new HopperOut());
-    	addSequential(new FollowChezyPath("TRIPath", true/*backwards*/, false,-1,0.0));
+    	addSequential(new FollowChezyPath("TRIPath", true/*backwards*/, false/*False = Right Peg, True = Left Peg*/,-1,0.0));
     	addSequential(new Delay(10));
     	addSequential(new EjectGear());
     	/*addSequential(new Delay(25));

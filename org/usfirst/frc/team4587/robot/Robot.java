@@ -16,6 +16,7 @@ import utility.GearCameraThread;
 import utility.Gyro;
 import utility.LogDataSource;
 import utility.ValueLogger;
+import utility.VisionCameraThread;
 
 import java.io.FileOutputStream;
 
@@ -107,7 +108,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	private static ValueLogger  logger;
 	private static SerialPort m_arduino;
 	private FileOutputStream log;
-	
+	private VisionCameraThread m_visionCameraThread;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -129,6 +130,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_hotDogs = new HotDogs();
 		m_hopperPiston = new HopperPiston();
 		//m_gearCameraThread = new GearCameraThread();
+		m_visionCameraThread = new VisionCameraThread();
+		
 		m_PDP = new PowerDistributionPanel();
 		
 		Bling.initialize();
@@ -265,7 +268,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		
+		m_visionCameraThread.run();
 		
 		System.out.println("init");
 		//m_turret.enable();

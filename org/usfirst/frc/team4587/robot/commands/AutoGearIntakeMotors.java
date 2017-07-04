@@ -12,6 +12,7 @@ public class AutoGearIntakeMotors extends Command {
 
 
 	int count;
+	int count2;
 	boolean finish;
 	boolean x;
 	boolean hasStalled;
@@ -24,7 +25,9 @@ public class AutoGearIntakeMotors extends Command {
     {
     	Robot.getGearIntake().gearIntakeDown();
     	Robot.getGearIntake().setGearIntakeMotor(-1.0);
+    	Robot.getGearIntake().setGearIsLoaded(false);
     	count = 0;
+    	count2 = 0;
     	finish = false;
     	hasStalled = false;
     	Robot.getGearIntake().setLEDMode();
@@ -35,25 +38,34 @@ public class AutoGearIntakeMotors extends Command {
     {
     	if (Robot.getGearIntake().isStalling())
     	{
-        	Robot.getGearIntake().setGearIsLoaded(true);
-    		if(count >= 0){//50 = 1sec
+    		if(count >= 10){//50 = 1sec
+            	Robot.getGearIntake().setGearIsLoaded(true);
             	Robot.getGearIntake().gearIntakeUp();
     		}
         	hasStalled = true;
-        	
+        	count2 = 0;
+    	}
+    	else if (hasStalled && (Robot.getGearIntake().isGearLoaded() == false))
+    	{
+    		count2++;
+    		if(count2 >= 5)
+    		{
+    			Robot.getGearIntake().setGearIsLoaded(false);
+    			hasStalled = false;
+    			count = 0;
+    			count2 = 0;
+    		}
     	}
     	if(hasStalled){
     		count++;
     		Bling.sendData((byte)65);
     	}
-    	if(count >= 12)
+    	if(count >= 24)
     	{
         	Robot.getGearIntake().setLEDMode();
         	Robot.getGearIntake().setGearIntakeMotor(0.0);
         	//Robot.getGearIntake().setLEDMode();
-    	}
-    	if(count >= 100){
-    		finish = true;
+        	finish = true;
     	}
     }
 

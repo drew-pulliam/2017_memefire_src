@@ -12,7 +12,7 @@ public class RobotMap {
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
 	public static final int PDP_PORT_GEAR_INTAKE_MOTOR = 11;
-	public static final int GEAR_INTAKE_STALL_CURRENT = 25;
+	public static final int GEAR_INTAKE_STALL_CURRENT = 20;
 
 	public static final int MOTOR_RIGHT_DRIVETRAIN = 0;
 	public static final int MOTOR_RIGHT_DRIVETRAIN_2 = 1;

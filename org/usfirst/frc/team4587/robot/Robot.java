@@ -197,6 +197,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		initializeNewPhase(ValueLogger.DISABLED_PHASE);
 		Bling.sendData((byte)69);
 		//m_turret.disable();
+		m_visionCameraThread.turnOff();
 		
 		Robot.getFlywheel().setRunning(false);
 		Robot.getFlywheel().disable();

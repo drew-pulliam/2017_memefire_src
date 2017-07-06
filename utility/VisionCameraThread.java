@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionCameraThread extends Thread{
 	
-	 
+	 boolean on = true;
 	  
 	  public void run()
 	  {
@@ -25,9 +25,11 @@ public class VisionCameraThread extends Thread{
 		  SmartDashboard.putNumber("visionCenterline", -50);
 		  SmartDashboard.putNumber("visionTime", -50);
 		  SmartDashboard.putBoolean("ConnectedToPi", false);
+		  ServerSocket serverSocket = null;
+		  Socket clientSocket = null;
 		  try{
-			  ServerSocket serverSocket = new ServerSocket(1200);
-			  Socket clientSocket = serverSocket.accept();
+			  serverSocket = new ServerSocket(1200);
+			  clientSocket = serverSocket.accept();
 			  SmartDashboard.putBoolean("ConnectedToPi", true);
 			    BufferedReader in = new BufferedReader(
 			            new InputStreamReader(clientSocket.getInputStream()));
@@ -35,6 +37,8 @@ public class VisionCameraThread extends Thread{
 			  int inRead;
 			  String line;
 			  while((inRead = in.read(inBuffer))>=0){
+				  if(on == false)
+					  break;
 				  line = new String(inBuffer);
 				  String[] tokens = line.split(",");
 				  if(tokens.length != 3){
@@ -51,6 +55,16 @@ public class VisionCameraThread extends Thread{
 		  }catch(Exception e){
 			  
 		  }
+		  finally
+		  {
+			  try{clientSocket.close();}catch(Exception e){}
+			  try{serverSocket.close();}catch(Exception e){}
+		  }
+	  }
+	  
+	  public synchronized void turnOff()
+	  {
+		  on = false;
 	  }
 }
 

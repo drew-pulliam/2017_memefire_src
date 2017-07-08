@@ -19,6 +19,7 @@ import utility.ValueLogger;
 import utility.VisionCameraThread;
 
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 import org.usfirst.frc.team4587.robot.commands.AutoGearBayou;
 import org.usfirst.frc.team4587.robot.commands.AutoGearCenter;
@@ -109,6 +110,13 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	private static SerialPort m_arduino;
 	private FileOutputStream log;
 	private VisionCameraThread m_visionCameraThread;
+	long[] times=null;
+	double[] headings=null;
+	int[] rightEncoders=null;
+	int[] leftEncoders=null;
+	static final int NUMBER_HIST=10000;
+	int historyIndex=0;
+	String lastActiveState=ValueLogger.DISABLED_PHASE;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -130,7 +138,6 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_hotDogs = new HotDogs();
 		m_hopperPiston = new HopperPiston();
 		//m_gearCameraThread = new GearCameraThread();
-		m_visionCameraThread = new VisionCameraThread();
 		
 		m_PDP = new PowerDistributionPanel();
 		
@@ -165,6 +172,11 @@ public class Robot extends IterativeRobot implements LogDataSource {
     			System.out.println(e);
     		}
     		*/
+        times=new long[NUMBER_HIST];
+        headings=new double[NUMBER_HIST];
+        leftEncoders=new int[NUMBER_HIST];
+        rightEncoders=new int[NUMBER_HIST];
+        
 	}
 	static byte[] buffer = new byte [2];
 	static int counter=0;
@@ -192,17 +204,38 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
+	void saveHistory(){
+		times[historyIndex]=System.nanoTime();
+		headings[historyIndex]=Gyro.getYaw();
+		leftEncoders[historyIndex]=m_driveBaseSimple.getEncoderLeft();
+		rightEncoders[historyIndex]=m_driveBaseSimple.getEncoderRight();
+		historyIndex=(historyIndex+1)%NUMBER_HIST;
+	}
+	
 	@Override
 	public void disabledInit() {
+		String prevState=lastActiveState;
 		initializeNewPhase(ValueLogger.DISABLED_PHASE);
 		Bling.sendData((byte)69);
 		//m_turret.disable();
-		m_visionCameraThread.turnOff();
+		if(m_visionCameraThread!=null){
+			m_visionCameraThread.turnOff();
+		}
 		
 		Robot.getFlywheel().setRunning(false);
 		Robot.getFlywheel().disable();
 		Robot.getFlywheel().setSetpoint(0.0);
 		
+		if(prevState.equals(ValueLogger.DISABLED_PHASE)==false){
+			try{
+				PrintStream p = new PrintStream("/home/lvuser/"+prevState+".csv");
+				p.println("time,heading,right,left");
+				for(int i = 0;i<historyIndex;i++){
+					p.println(times[i]+","+headings[i]+","+rightEncoders[i]+","+leftEncoders[i]);
+				}
+				p.close();
+			}catch(Exception e){}
+		}
 		//m_indexer.disable();
 		//m_gearCameraThread.setRunning(false);
 	}
@@ -246,6 +279,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		historyIndex=0;
 	}
 
 	/**
@@ -258,18 +293,21 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_driveBaseSimple.getValues();
        // if ( logger != null ) logger.logValues(start);
 		//m_driveBase.getValues(); //put driveBase info on SmartDashboard
+		saveHistory();
 	}
 
 	@Override
 	public void teleopInit() {
 		
-		System.out.println("init2");
+		System.out.println("HI!!!!");
 		initializeNewPhase(ValueLogger.TELEOP_PHASE);
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		m_visionCameraThread.run();
+		m_visionCameraThread = new VisionCameraThread();
+		m_visionCameraThread.start();
+		
 		
 		System.out.println("init");
 		//m_turret.enable();
@@ -295,6 +333,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		}*/
 		//m_gearCameraThread.setRunning(true);
 		//m_gearCameraThread.start();
+		historyIndex=0;
 	}
 
 	/**
@@ -304,7 +343,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	public void teleopPeriodic() {
 		long start = System.nanoTime();
 		boolean on = true;
-    
+		SmartDashboard.putBoolean("visionThreadIsAlive", m_visionCameraThread.isAlive());
+		SmartDashboard.putString("visionThreadState", m_visionCameraThread.getState().toString());
 		Scheduler.getInstance().run();
 		if ( logger != null ) logger.logValues(start);
 		/*
@@ -326,7 +366,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
     	{
     		m_gearIntake.setGearIsLoaded(true);put back
     	}*/
-		
+		saveHistory();
 		SmartDashboard.putNumber("PDP voltage", m_PDP.getVoltage());
 		SmartDashboard.putNumber("PDP port 7", m_PDP.getCurrent(RobotMap.PDP_PORT_GEAR_INTAKE_MOTOR));
 		
@@ -342,6 +382,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	
 	private void initializeNewPhase ( String whichPhase )
     {
+		lastActiveState=whichPhase;
         if ( autonomousCommand != null ) {
             autonomousCommand.cancel();
             autonomousCommand = null;

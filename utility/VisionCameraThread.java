@@ -1,7 +1,10 @@
 package utility;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,50 +24,71 @@ public class VisionCameraThread extends Thread{
 	  
 	  public void run()
 	  {
+		  PrintStream w=null;
+		  try{
+		  w = new PrintStream("/home/lvuser/cameraThreadLog.csv");
+		  }catch(Exception e){}
+		  w.println("run");
 		  SmartDashboard.putNumber("visionHeight", -50);
 		  SmartDashboard.putNumber("visionCenterline", -50);
 		  SmartDashboard.putNumber("visionTime", -50);
 		  SmartDashboard.putBoolean("ConnectedToPi", false);
 		  ServerSocket serverSocket = null;
 		  Socket clientSocket = null;
+	      PrintWriter clientSocketWriter = null ;
 		  try{
-			  serverSocket = new ServerSocket(1200);
-			  clientSocket = serverSocket.accept();
-			  SmartDashboard.putBoolean("ConnectedToPi", true);
-			    BufferedReader in = new BufferedReader(
-			            new InputStreamReader(clientSocket.getInputStream()));
-			  char[] inBuffer = new char[256];
-			  int inRead;
-			  String line;
-			  while((inRead = in.read(inBuffer))>=0){
-				  if(on == false)
-					  break;
-				  line = new String(inBuffer);
-				  String[] tokens = line.split(",");
-				  if(tokens.length != 3){
-					  System.out.println("BAD Stuff");
-					  continue;
+			  serverSocket = new ServerSocket(1189);
+			  w.println("about to accept");
+			  while(on){
+				  clientSocket = serverSocket.accept();
+				  clientSocketWriter = new PrintWriter ( clientSocket.getOutputStream(), /*autoFlush=*/true );
+				  SmartDashboard.putBoolean("ConnectedToPi", true);
+				    BufferedReader in = new BufferedReader(
+				            new InputStreamReader(clientSocket.getInputStream()));
+				  String line;
+				  w.println("before while");
+				  while((line = in.readLine())!=null){
+					  w.println("after while");
+					  if(on == false)
+						  break;
+					  String[] tokens = line.split(",");
+					  if(tokens.length != 3){
+						  w.println("BAD Stuff");
+						  continue;
+					  }
+					  double height = Double.parseDouble(tokens[0]);
+					  double centerline = Double.parseDouble(tokens[1]);
+					  double time = Double.parseDouble(tokens[2]);
+					  SmartDashboard.putNumber("visionHeight", height);
+					  SmartDashboard.putNumber("visionCenterline", centerline);
+					  SmartDashboard.putNumber("visionTime", time);
+					  clientSocketWriter.println("alive");
 				  }
-				  double height = Double.parseDouble(tokens[0]);
-				  double centerline = Double.parseDouble(tokens[1]);
-				  double time = Double.parseDouble(tokens[2]);
-				  SmartDashboard.putNumber("visionHeight", height);
-				  SmartDashboard.putNumber("visionCenterline", centerline);
-				  SmartDashboard.putNumber("visionTime", time);
+				  try{in.close();}catch(Exception e){}
+				  try{clientSocketWriter.close();}catch(Exception e){}
+				  try{clientSocket.close();}catch(Exception e){}
 			  }
 		  }catch(Exception e){
-			  
+			  w.println(e);
 		  }
 		  finally
 		  {
+			  w.println("finally");
 			  try{clientSocket.close();}catch(Exception e){}
 			  try{serverSocket.close();}catch(Exception e){}
+			  w.close();
 		  }
 	  }
 	  
 	  public synchronized void turnOff()
 	  {
 		  on = false;
+		  System.err.println("turnOff");
+	  }
+	  public synchronized void turnOn()
+	  {
+		  on = true;
+		  System.err.println("turnOn");
 	  }
 }
 

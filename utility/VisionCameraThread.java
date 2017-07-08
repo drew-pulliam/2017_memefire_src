@@ -20,8 +20,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionCameraThread extends Thread{
 	
-	 boolean on = true;
-	  
+	  boolean on = true;
+	  double height;
+	  double centerline;
+	  double time;
 	  public void run()
 	  {
 		  PrintStream w=null;
@@ -56,9 +58,9 @@ public class VisionCameraThread extends Thread{
 						  w.println("BAD Stuff");
 						  continue;
 					  }
-					  double height = Double.parseDouble(tokens[0]);
-					  double centerline = Double.parseDouble(tokens[1]);
-					  double time = Double.parseDouble(tokens[2]);
+					  height = Double.parseDouble(tokens[0]);
+					  centerline = Double.parseDouble(tokens[1]);
+					  time = Double.parseDouble(tokens[2]);
 					  SmartDashboard.putNumber("visionHeight", height);
 					  SmartDashboard.putNumber("visionCenterline", centerline);
 					  SmartDashboard.putNumber("visionTime", time);
@@ -79,7 +81,13 @@ public class VisionCameraThread extends Thread{
 			  w.close();
 		  }
 	  }
-	  
+	  public double[] getValues(){
+		  double[] values = new double[3];
+		  values[0]=time;
+		  values[1]=centerline;
+		  values[2]=height;
+		  return values;
+	  }
 	  public synchronized void turnOff()
 	  {
 		  on = false;

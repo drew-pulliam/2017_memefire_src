@@ -109,13 +109,31 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	private static ValueLogger  logger;
 	private static SerialPort m_arduino;
 	private FileOutputStream log;
-	private VisionCameraThread m_visionCameraThread;
-	long[] times=null;
-	double[] headings=null;
-	int[] rightEncoders=null;
-	int[] leftEncoders=null;
+	private static VisionCameraThread m_visionCameraThread;
+	public static VisionCameraThread getVisionCameraThread(){
+		return m_visionCameraThread;
+	}
+	static long[] times=null;
+	public static long getTime(int index){
+		return times[index];
+	}
+	static double[] headings=null;
+	public static double getHeading(int index){
+		return headings[index];
+	}
+	static int[] rightEncoders=null;
+	public static int getRightEncoder(int index){
+		return rightEncoders[index];
+	}
+	static int[] leftEncoders=null;
+	public static int getLeftEncoder(int index){
+		return leftEncoders[index];
+	}
 	static final int NUMBER_HIST=10000;
-	int historyIndex=0;
+	static int historyIndex=0;
+	public static int getHistoryIndex(){
+		return historyIndex;
+	}
 	String lastActiveState=ValueLogger.DISABLED_PHASE;
 	/**
 	 * This function is run when the robot is first started up and should be

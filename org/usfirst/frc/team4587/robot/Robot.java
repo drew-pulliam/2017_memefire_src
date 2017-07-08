@@ -21,6 +21,7 @@ import utility.VisionCameraThread;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
+import org.usfirst.frc.team4587.robot.commands.Aim;
 import org.usfirst.frc.team4587.robot.commands.AutoGearBayou;
 import org.usfirst.frc.team4587.robot.commands.AutoGearCenter;
 import org.usfirst.frc.team4587.robot.commands.AutoGearSide;
@@ -115,24 +116,57 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	}
 	static long[] times=null;
 	public static long getTime(int index){
-		return times[index];
+		return times[normalizeIndex(index)];
 	}
 	static double[] headings=null;
 	public static double getHeading(int index){
-		return headings[index];
+		return headings[normalizeIndex(index)];
 	}
 	static int[] rightEncoders=null;
 	public static int getRightEncoder(int index){
-		return rightEncoders[index];
+		return rightEncoders[normalizeIndex(index)];
 	}
 	static int[] leftEncoders=null;
 	public static int getLeftEncoder(int index){
-		return leftEncoders[index];
+		return leftEncoders[normalizeIndex(index)];
 	}
 	static final int NUMBER_HIST=10000;
 	static int historyIndex=0;
 	public static int getHistoryIndex(){
 		return historyIndex;
+	}
+	public static int normalizeIndex(int index){
+		while(index>=NUMBER_HIST){
+			index-=NUMBER_HIST;
+		}while(index<0){
+			index+=NUMBER_HIST;
+		}
+		return index;
+	}
+	public static int getIndexFromTime(long absoluteTime){
+		long currentTime = getTime(historyIndex);
+		if(absoluteTime>currentTime){
+			return historyIndex;
+		}else{
+			int ticksIX0 = Math.round((currentTime - absoluteTime) / 20000000);
+			long testTime = getTime(ticksIX0);
+			while(testTime<absoluteTime){
+				ticksIX0+=1;
+				testTime = getTime(ticksIX0);
+			}
+			int ticksIX1 = ticksIX0;
+			while(testTime>absoluteTime){
+				ticksIX0-=1;
+				testTime = getTime(ticksIX0);
+			}
+			ticksIX1 = ticksIX0+1;
+			//IX0 is < than desired, IX1 is > than desired
+			if(Math.abs(ticksIX0-absoluteTime)>Math.abs(ticksIX1-absoluteTime)){
+				return ticksIX1;
+			}else{
+				return ticksIX0;
+			}
+		}
 	}
 	String lastActiveState=ValueLogger.DISABLED_PHASE;
 	/**
@@ -284,8 +318,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		//autonomousCommand = new AutoGearSide1("right");
 		//autonomousCommand = new AutoGearCenter();
 		//autonomousCommand = new HopperAuto("blue");
-		autonomousCommand = new AutonomousTRI();
-		
+		//autonomousCommand = new AutonomousTRI();
+		m_visionCameraThread = new VisionCameraThread();
+		m_visionCameraThread.start();
+		autonomousCommand = new Aim();
 		//autonomousCommand = new AutoMobility();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -50,6 +50,7 @@ public class VisionCameraThread extends Thread{
 				  String line;
 				  w.println("before while");
 				  while((line = in.readLine())!=null){
+					  long sysTime = System.nanoTime()/1000000;
 					  w.println("after while");
 					  if(on == false)
 						  break;
@@ -60,7 +61,7 @@ public class VisionCameraThread extends Thread{
 					  }
 					  height = Double.parseDouble(tokens[0]);
 					  centerline = Double.parseDouble(tokens[1]);
-					  time = Double.parseDouble(tokens[2]);
+					  time = (sysTime-Double.parseDouble(tokens[2]))*1000000;
 					  SmartDashboard.putNumber("visionHeight", height);
 					  SmartDashboard.putNumber("visionCenterline", centerline);
 					  SmartDashboard.putNumber("visionTime", time);

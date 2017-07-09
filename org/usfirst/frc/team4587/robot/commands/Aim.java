@@ -23,25 +23,17 @@ public class Aim extends Command {
 	private double desiredHeading;
 	private double actualHeadingAtPictureTime;
 	private double deltaAngleToBoiler=0.0;
-	private double thisVelocity;
-	private double thisDistance;
-	private double lastDistance;
-	private double thisTime;
-	private double lastTime;
 	private double turnDistanceToGoal;
 	private double[] values;
 	private double pixelsToDegrees=0.125;
 	private int desiredCenterline=160;
-	private long time;
-	private double degrees;
-	private int leftEncoders;
-	private int rightEncoders;
 	private double wheelBase;
-	double Ka = 0.1;
+	double Ka = 0.05;
 	double Kv = 0.4/43;
-	double tolerance = 3;
+	double tolerance = 10;
 	double currentLeftVel;
 	double currentRightVel;
+	int count;
 
     public Aim() {
     	
@@ -53,37 +45,36 @@ public class Aim extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	SmartDashboard.putString("Interrupted?", "no");
+    	SmartDashboard.putString("end?", "no");
     	Robot.getLEDSolenoid().LEDOn();
     	maxVelocity=8.0;
     	maxAcceleration=6.0;
     	wheelBase = 28.0/12.0;
+    	count =0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumber("aimCount", count);
+    	count+=1;
+    	System.out.println("aiming");
     	currentHeading=Gyro.getYaw();
-    	thisTime = System.nanoTime();
     	values = Robot.getVisionCameraThread().getValues();
     	picTime = values[0];
     	centerline = values[1];
     	height = values[2];
+    	int histIndex=Robot.getHistoryIndex();
+    	int picIndex = Robot.getIndexFromTime((long)picTime);
     	if(centerline>=0){
     		deltaAngleToBoiler=(centerline-desiredCenterline)*pixelsToDegrees;
+        	actualHeadingAtPictureTime = Robot.getHeading(picIndex);
+        	desiredHeading = actualHeadingAtPictureTime + deltaAngleToBoiler;
     	}
+
+    	SmartDashboard.putNumber("aimCount", count);
+    	count+=1;
     	
-    	int histIndex=Robot.getHistoryIndex();
-    	time = Robot.getTime(histIndex);
-    	degrees=Robot.getHeading(histIndex);
-    	leftEncoders=Robot.getLeftEncoder(histIndex);
-    	rightEncoders=Robot.getRightEncoder(histIndex);
-    	
-    	int picIndex = Robot.getIndexFromTime((long)picTime);
-    	double picIndexTime = Robot.getTime(picIndex);
-    	double picIndexLeft = Robot.getLeftEncoder(picIndex);
-    	double picIndexRight = Robot.getRightEncoder(picIndex);
-    	
-    	actualHeadingAtPictureTime = Robot.getHeading(picIndex);
-    	desiredHeading = actualHeadingAtPictureTime + deltaAngleToBoiler;
     	
     	double degreesToTurn = desiredHeading-currentHeading;
     	if(Math.abs(degreesToTurn)>=180){
@@ -94,20 +85,23 @@ public class Aim extends Command {
     			degreesToTurn-=360;
     		}
     	}
-    	if(Math.abs(degreesToTurn)<tolerance){
+    	SmartDashboard.putNumber("degreesToTurn", degreesToTurn);
+    	if(Math.abs(degreesToTurn)<tolerance*pixelsToDegrees){
     		Robot.getDriveBaseSimple().setLeftMotor(0.0);
     		Robot.getDriveBaseSimple().setRightMotor(0.0);
+        	SmartDashboard.putNumber("aimCount", count);
+        	count+=1;
     		return;
     	}
     	turnDistanceToGoal = degreesToTurn * Math.PI * wheelBase / 360;
-    	
+
     	double[] leftAccAndVel = findAccAndVel(Robot.getLeftEncoder(histIndex),Robot.getLeftEncoder(histIndex-1),Robot.getLeftEncoder(histIndex-2),turnDistanceToGoal);
     	double[] rightAccAndVel = findAccAndVel(Robot.getRightEncoder(histIndex),Robot.getRightEncoder(histIndex-1),Robot.getRightEncoder(histIndex-2),turnDistanceToGoal*-1);
     	//thisDistance = ;
     	currentLeftVel = leftAccAndVel[2];
     	currentRightVel = rightAccAndVel[2];
     	
-    	double leftMotorLevel = Ka * leftAccAndVel[0] + Kv * leftAccAndVel[1];
+    	double leftMotorLevel =  Ka * leftAccAndVel[0] + Kv * leftAccAndVel[1];
     	double rightMotorLevel = Ka * rightAccAndVel[0] + Kv * rightAccAndVel[1];
 
     	Robot.getDriveBaseSimple().setLeftMotor(leftMotorLevel);
@@ -168,12 +162,14 @@ public class Aim extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(centerline - desiredCenterline)<=tolerance&&Math.abs(currentLeftVel)<0.1&&Math.abs(currentRightVel)<0.1;
+    	SmartDashboard.putBoolean("aimIsFinished", Math.abs(centerline - desiredCenterline)<=tolerance&&Math.abs(currentLeftVel)<0.1&&Math.abs(currentRightVel)<0.1);
+    	return Math.abs(centerline - desiredCenterline)<=tolerance&&Math.abs(currentLeftVel)<0.05&&Math.abs(currentRightVel)<0.05;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	//Robot.getDriveBaseSimple().arcadeDrive(0, 0);
+    	SmartDashboard.putString("end?", "yes");
 		Robot.getDriveBaseSimple().setLeftMotor(0.0);
 		Robot.getDriveBaseSimple().setRightMotor(0.0);
 		Robot.getLEDSolenoid().LEDOff();
@@ -182,6 +178,7 @@ public class Aim extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	SmartDashboard.putString("Interrupted?", "yes");
     	end();
     }
 }

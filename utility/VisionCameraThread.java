@@ -62,6 +62,9 @@ public class VisionCameraThread extends Thread{
 					  height = Double.parseDouble(tokens[0]);
 					  centerline = Double.parseDouble(tokens[1]);
 					  time = (sysTime-Double.parseDouble(tokens[2]))*1000000;
+					  if(time<0){
+						  time=0;
+					  }
 					  SmartDashboard.putNumber("visionHeight", height);
 					  SmartDashboard.putNumber("visionCenterline", centerline);
 					  SmartDashboard.putNumber("visionTime", time);

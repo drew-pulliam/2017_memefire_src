@@ -155,11 +155,13 @@ public class Robot extends IterativeRobot implements LogDataSource {
 			int ticksIX0 = Math.round((currentTime - absoluteTime) / 20000000);
 			long testTime = getTime(ticksIX0);
 			while(testTime<absoluteTime){
+				System.out.println("first loop");
 				ticksIX0+=1;
 				testTime = getTime(ticksIX0);
 			}
 			int ticksIX1 = ticksIX0;
 			while(testTime>absoluteTime){
+				System.out.println("second loop- ticksIX0: "+ticksIX0+" testTime: "+testTime+" absoluteTime: "+absoluteTime);
 				ticksIX0-=1;
 				testTime = getTime(ticksIX0);
 			}
@@ -350,6 +352,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		long start = System.nanoTime();
         Scheduler.getInstance().run();
 		m_driveBaseSimple.getValues();
+		if ( logger != null ) logger.logValues(start);
        // if ( logger != null ) logger.logValues(start);
 		//m_driveBase.getValues(); //put driveBase info on SmartDashboard
 		saveHistory();
@@ -357,8 +360,6 @@ public class Robot extends IterativeRobot implements LogDataSource {
 
 	@Override
 	public void teleopInit() {
-		
-		System.out.println("HI!!!!");
 		initializeNewPhase(ValueLogger.TELEOP_PHASE);
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

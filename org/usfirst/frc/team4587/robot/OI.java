@@ -112,6 +112,11 @@ public class OI implements LogDataSource {
     	leftBumper1.whileHeld(new ClimbMotorStart());
     	rightTrigger1.whenPressed(new ToggleGearIntakeUpDown());
     	leftTrigger1.whileHeld(new BallIntakeOut());
+
+    	buttonA2.whenPressed(new RunShintakeMotor(1.0));
+    	buttonY2.whenPressed(new Aim());
+    	buttonX2.whenPressed(new ToggleFlywheelRunning(true, 4000));
+    	buttonB2.whenPressed(new ToggleFlywheelRunning(false, 0));
     	/*
     	buttonA1.whenPressed(new AutoGearSide1("left"));
     	buttonB1.whenPressed(new AutoGearSide1("right"));

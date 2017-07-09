@@ -41,6 +41,7 @@ public class AutoGearIntakeMotors extends Command {
     		if(count >= 10){//50 = 1sec
             	Robot.getGearIntake().setGearIsLoaded(true);
             	Robot.getGearIntake().gearIntakeUp();
+            	Robot.getLEDSolenoid().LEDOn();
     		}
         	hasStalled = true;
         	count2 = 0;
@@ -78,6 +79,7 @@ public class AutoGearIntakeMotors extends Command {
     protected void end() {
     	//Robot.getGearIntake().setLEDMode();
     	//Robot.getGearIntake().gearIntakeUp();
+    	Robot.getLEDSolenoid().LEDOff();
     }
 
     // Called when another command which requires one or more of the same

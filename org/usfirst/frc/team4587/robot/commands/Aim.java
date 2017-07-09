@@ -37,7 +37,7 @@ public class Aim extends Command {
 	private int leftEncoders;
 	private int rightEncoders;
 	private double wheelBase;
-	double Ka = 0.01;
+	double Ka = 0.1;
 	double Kv = 0.4/43;
 	double tolerance = 3;
 	double currentLeftVel;
@@ -48,10 +48,12 @@ public class Aim extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.getDriveBaseSimple());
+    	requires(Robot.getLEDSolenoid());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.getLEDSolenoid().LEDOn();
     	maxVelocity=8.0;
     	maxAcceleration=6.0;
     	wheelBase = 28.0/12.0;
@@ -92,19 +94,35 @@ public class Aim extends Command {
     			degreesToTurn-=360;
     		}
     	}
+    	if(Math.abs(degreesToTurn)<tolerance){
+    		Robot.getDriveBaseSimple().setLeftMotor(0.0);
+    		Robot.getDriveBaseSimple().setRightMotor(0.0);
+    		return;
+    	}
     	turnDistanceToGoal = degreesToTurn * Math.PI * wheelBase / 360;
     	
     	double[] leftAccAndVel = findAccAndVel(Robot.getLeftEncoder(histIndex),Robot.getLeftEncoder(histIndex-1),Robot.getLeftEncoder(histIndex-2),turnDistanceToGoal);
     	double[] rightAccAndVel = findAccAndVel(Robot.getRightEncoder(histIndex),Robot.getRightEncoder(histIndex-1),Robot.getRightEncoder(histIndex-2),turnDistanceToGoal*-1);
     	//thisDistance = ;
-    	currentLeftVel = leftAccAndVel[1];
-    	currentRightVel = rightAccAndVel[1];
+    	currentLeftVel = leftAccAndVel[2];
+    	currentRightVel = rightAccAndVel[2];
     	
     	double leftMotorLevel = Ka * leftAccAndVel[0] + Kv * leftAccAndVel[1];
     	double rightMotorLevel = Ka * rightAccAndVel[0] + Kv * rightAccAndVel[1];
 
     	Robot.getDriveBaseSimple().setLeftMotor(leftMotorLevel);
     	Robot.getDriveBaseSimple().setRightMotor(rightMotorLevel);
+    	SmartDashboard.putNumber("LeftMotorLevel: ", leftMotorLevel);
+    	SmartDashboard.putNumber("RightMotorLevel: ", rightMotorLevel);
+    	SmartDashboard.putNumber("rightAcc: ", rightAccAndVel[0]);
+    	SmartDashboard.putNumber("rightVel: ", rightAccAndVel[1]);
+    	SmartDashboard.putNumber("leftAcc: ", leftAccAndVel[0]);
+    	SmartDashboard.putNumber("leftVel: ", leftAccAndVel[1]);
+    	SmartDashboard.putNumber("dist", turnDistanceToGoal);
+    	SmartDashboard.putNumber("headingAtPic", actualHeadingAtPictureTime);
+    	SmartDashboard.putNumber("deltaAngleToBoiler", deltaAngleToBoiler);
+    	SmartDashboard.putNumber("currentLeftVel", currentLeftVel);
+    	SmartDashboard.putNumber("currentRightVel", currentRightVel);
     }
     
     private double[] findAccAndVel(int encoder0,int encoder1,int encoder2,double turnDistToGoal){
@@ -141,9 +159,10 @@ public class Aim extends Command {
         		}
         	}
     	}
-    	double[] result = new double[2];
+    	double[] result = new double[3];
     	result[0] = thisLeftAcc;
     	result[1] = thisLeftVel;
+    	result[2] = currentLeftVelocity;
     	return result;
     }
 
@@ -155,6 +174,9 @@ public class Aim extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//Robot.getDriveBaseSimple().arcadeDrive(0, 0);
+		Robot.getDriveBaseSimple().setLeftMotor(0.0);
+		Robot.getDriveBaseSimple().setRightMotor(0.0);
+		Robot.getLEDSolenoid().LEDOff();
     }
 
     // Called when another command which requires one or more of the same

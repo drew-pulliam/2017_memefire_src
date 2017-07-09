@@ -103,6 +103,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	public static PowerDistributionPanel getPDP(){
 		return m_PDP;
 	}
+	private static LEDSolenoid m_LEDSolenoid;
+	public static LEDSolenoid getLEDSolenoid(){
+		return m_LEDSolenoid;
+	}
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -189,6 +193,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
     	m_gearIntake = new GearIntake();
 		m_hotDogs = new HotDogs();
 		m_hopperPiston = new HopperPiston();
+		m_LEDSolenoid = new LEDSolenoid();
 		//m_gearCameraThread = new GearCameraThread();
 		
 		m_PDP = new PowerDistributionPanel();

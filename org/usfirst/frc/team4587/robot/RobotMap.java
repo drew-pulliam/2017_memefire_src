@@ -35,6 +35,7 @@ public class RobotMap {
 	public static final int SOLENOID_GEAR_INTAKE = 4;
 	public static final int SOLENOID_BALL_INTAKE = 5;
 	public static final int SOLENOID_HOPPER = 6;
+	public static final int SOLENOID_LED_RING = 0;
 	//
 	public static final int ENCODER_FLYWHEEL_A = 9;
 	public static final int ENCODER_FLYWHEEL_B = 8;

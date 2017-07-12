@@ -7,28 +7,45 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BallIntakeOut extends Command {
+public class LEDRingDefaultCommand extends Command {
 
-
-    public BallIntakeOut() {
-    	requires(Robot.getBallIntake());
+	boolean on=false;
+	int count;
+	int pulseLength=10;
+	boolean flashyMode;
+    public LEDRingDefaultCommand() {
+    	requires(Robot.getLEDSolenoid());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	Robot.getBallIntake().setBallIntakeMotor(-1.0);
+    	count=pulseLength;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	//Robot.getBallIntake().setBallIntakeMotor(-1.0);
+    	flashyMode = Robot.getLEDSolenoid().getFlashyMode();
+    	if(flashyMode){
+    		count++;
+    		if(count>pulseLength){
+    			if(Robot.getLEDSolenoid().getLEDOn()){
+    				Robot.getLEDSolenoid().LEDOff();
+    			}else{
+    				Robot.getLEDSolenoid().LEDOn();
+    			}
+    			count = 0;
+    		}
+    	}else{
+    		count=pulseLength;
+    		Robot.getLEDSolenoid().LEDOff();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

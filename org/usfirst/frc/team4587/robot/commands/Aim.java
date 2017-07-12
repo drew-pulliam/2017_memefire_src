@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4587.robot.commands;
 
 import org.usfirst.frc.team4587.robot.Robot;
+import org.usfirst.frc.team4587.robot.commands.AimGearDrive.myPIDOutput;
+import org.usfirst.frc.team4587.robot.commands.AimGearDrive.myPIDSource;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -31,9 +33,16 @@ public class Aim extends Command {
 	double Ka = 0.05;
 	double Kv = 0.4/43;
 	double tolerance = 10;
+	double maxDistToGoSlow=1;//ft
+	double slowSpeed = 0.3;
+	double maxSpeed = 0.25;
 	double currentLeftVel;
 	double currentRightVel;
 	int count;
+	PIDController turnControl;
+	myPIDSource m_myPIDSource;
+	myPIDOutput m_myPIDOutput;
+	int count2;
 
     public Aim() {
     	
@@ -41,8 +50,68 @@ public class Aim extends Command {
         // eg. requires(chassis);
     	requires(Robot.getDriveBaseSimple());
     	requires(Robot.getLEDSolenoid());
+    	m_myPIDSource = new myPIDSource();
+    	m_myPIDOutput = new myPIDOutput();
+    	turnControl = new PIDController(0.03, 0.00, 0.0, m_myPIDSource, m_myPIDOutput);
+    	turnControl.setAbsoluteTolerance(1);
+    	turnControl.setInputRange(-180, 180);
+    	turnControl.setContinuous(true);
     }
 
+    class myPIDOutput implements PIDOutput{
+
+		@Override
+		public void pidWrite(double output) {
+			// TODO Auto-generated method stub
+			double left = output+(slowSpeed*(output<0?-1:1));
+			double right = output*-1+(slowSpeed*(output<0?1:-1));
+			if(Math.abs(left)>maxSpeed){
+				left = maxSpeed*(left<0?-1:1);
+			}
+			if(Math.abs(right)>maxSpeed){
+				right = maxSpeed*(right<0?-1:1);
+			}
+			left = maxSpeed*(left<0?-1:1);
+			right = maxSpeed*(right<0?-1:1);
+			Robot.getDriveBaseSimple().setLeftMotor(left);
+			Robot.getDriveBaseSimple().setRightMotor(right);
+		}
+    	
+    }
+    void setSetpoint(double setpoint)
+    {
+    	while (setpoint < -180)
+    	{
+    		setpoint += 360;
+    	}
+    	while (setpoint > 180)
+    	{
+    		setpoint -= 360;
+    	}
+    	turnControl.setSetpoint(setpoint);
+    }
+    
+    class myPIDSource implements PIDSource{
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			// TODO Auto-generated method stub
+			return PIDSourceType.kDisplacement;
+		}
+
+		@Override
+		public double pidGet() {
+			// TODO Auto-generated method stub
+			return Gyro.getYaw();
+		}
+    	
+    }
     // Called just before this Command runs the first time
     protected void initialize() {
     	SmartDashboard.putString("Interrupted?", "no");
@@ -52,6 +121,8 @@ public class Aim extends Command {
     	maxAcceleration=6.0;
     	wheelBase = 28.0/12.0;
     	count =0;
+    	count2=0;
+    	turnControl.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -100,12 +171,24 @@ public class Aim extends Command {
     	//thisDistance = ;
     	currentLeftVel = leftAccAndVel[2];
     	currentRightVel = rightAccAndVel[2];
-    	
-    	double leftMotorLevel =  Ka * leftAccAndVel[0] + Kv * leftAccAndVel[1];
-    	double rightMotorLevel = Ka * rightAccAndVel[0] + Kv * rightAccAndVel[1];
+    	double leftMotorLevel=0.0;
+    	double rightMotorLevel=0.0;
+    	if(turnDistanceToGoal>maxDistToGoSlow){
+    		turnControl.disable();
+    		leftMotorLevel =  Ka * leftAccAndVel[0] + Kv * leftAccAndVel[1];
+    		rightMotorLevel = Ka * rightAccAndVel[0] + Kv * rightAccAndVel[1];
+        	Robot.getDriveBaseSimple().setLeftMotor(leftMotorLevel);
+        	Robot.getDriveBaseSimple().setRightMotor(rightMotorLevel);
+    	}else{
+    		if(count2<=0){
+            	turnControl.setSetpoint(desiredHeading);
+            	SmartDashboard.putNumber("aimSetpoint", desiredHeading);
+            	count2++;
+    		}
+        	turnControl.setSetpoint(desiredHeading);
+        	turnControl.enable();
+    	}
 
-    	Robot.getDriveBaseSimple().setLeftMotor(leftMotorLevel);
-    	Robot.getDriveBaseSimple().setRightMotor(rightMotorLevel);
     	SmartDashboard.putNumber("LeftMotorLevel: ", leftMotorLevel);
     	SmartDashboard.putNumber("RightMotorLevel: ", rightMotorLevel);
     	SmartDashboard.putNumber("rightAcc: ", rightAccAndVel[0]);
@@ -170,6 +253,7 @@ public class Aim extends Command {
     protected void end() {
     	//Robot.getDriveBaseSimple().arcadeDrive(0, 0);
     	SmartDashboard.putString("end?", "yes");
+		turnControl.disable();
 		Robot.getDriveBaseSimple().setLeftMotor(0.0);
 		Robot.getDriveBaseSimple().setRightMotor(0.0);
 		Robot.getLEDSolenoid().LEDOff();

@@ -25,7 +25,7 @@ public class Feeder extends Subsystem {
 	private boolean m_isClimbing = false;
 	public void setFeederMotor(double x)
 	{
-		m_feederMotor.set(x);
+		m_feederMotor.set(x*-1);
 	}
 
     public Feeder()

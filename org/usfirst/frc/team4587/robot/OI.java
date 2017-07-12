@@ -45,6 +45,7 @@ public class OI implements LogDataSource {
     	leftTrigger2	= new JoyButton(stick2, JoyButton.JoyDir.DOWN, 2);
     	rightBumper2	= new JoystickButton(stick2, 6);
     	rightTrigger2	= new JoyButton(stick2, JoyButton.JoyDir.DOWN, 3);
+    	
 /*
     	buttonY1.whenPressed(new SetScytheAndShintake(0.7,0.0,0));
     	buttonA1.whenPressed(new SetScytheAndShintake(0.7,1.0,25));
@@ -106,17 +107,30 @@ public class OI implements LogDataSource {
     	*/
     	buttonA1.whenPressed(new AutoGearIntakeMotors());
     	buttonB1.whenPressed(new GearIntakeIdle());
-    	buttonX1.whenPressed(new BallIntakeOn());
-    	buttonY1.whenPressed(new BallIntakeOff());
+    	//buttonX1.whenPressed(new BallIntakeOn());//vision+flywheel spin up
+    	//buttonY1.whenPressed(new BallIntakeOff());//flywheel spin up (no vision if camera breaks)
     	rightBumper1.whenPressed(new EjectGear());
     	leftBumper1.whileHeld(new ClimbMotorStart());
     	rightTrigger1.whenPressed(new ToggleGearIntakeUpDown());
-    	leftTrigger1.whileHeld(new BallIntakeOut());
+    	leftTrigger1.whileHeld(new BallIntakeOut());//held=rollers all on=shoot, w/o flywheel control or vision
 
-    	buttonA2.whenPressed(new RunShintakeMotor(1.0));
-    	buttonY2.whenPressed(new Aim());
-    	buttonX2.whenPressed(new ToggleFlywheelRunning(true, 4000));
+    	buttonA2.whenPressed(new ToggleFlywheelRunning(true, 3020));
     	buttonB2.whenPressed(new ToggleFlywheelRunning(false, 0));
+    	//buttonX2.whenPressed(new ShintakeAndHotDogsToggle());
+    	buttonX2.whenPressed(new ShootBalls());
+    	buttonY2.whenPressed(new BallIntakeToggle());
+    	//leftBumper2.whenPressed(new Aim());
+    	leftBumper2.whenPressed(new BallIntakeDown());
+    	rightBumper2.whenPressed(new LEDRingToggle());
+    	/*
+    	rightTrigger2.whenPressed(new BallIntakeHeld());
+    	rightBumper2.whenPressed(new HopperOut());
+    	leftBumper2.whenPressed(new HopperIn());
+    	buttonX2.whenPressed(new BallIntakeDown());
+    	buttonY2.whenPressed(new BallIntakeUp());
+    	buttonA2.whenPressed(new BallIntakeOn());
+    	buttonB2.whenPressed(new BallIntakeOff());
+    	*/
     	/*
     	buttonA1.whenPressed(new AutoGearSide1("left"));
     	buttonB1.whenPressed(new AutoGearSide1("right"));
@@ -214,7 +228,9 @@ public class OI implements LogDataSource {
 	    	leftBumper2.whenPressed(new PulseLowGoalSolenoid(1000));
     	}*/
     }
-    
+    private double getPOV(){
+    	return stick1.getPOV();
+    }
     public double getTurn()
     {
     	return stick1.getRawAxis(4);

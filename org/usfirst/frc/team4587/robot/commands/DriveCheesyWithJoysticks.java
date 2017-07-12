@@ -25,8 +25,8 @@ public class DriveCheesyWithJoysticks extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	boolean quickTurn;
-    	double driveStick = Robot.getOI().getDrive();
-    	double turnStick = Robot.getOI().getTurn();
+    	double driveStick = Robot.getOI().getDrive()*-1;
+    	double turnStick = Robot.getOI().getTurn()*-1;
     	if(Math.abs(turnStick) <= 0.02){
     		turnStick = 0.0;
     	}else{

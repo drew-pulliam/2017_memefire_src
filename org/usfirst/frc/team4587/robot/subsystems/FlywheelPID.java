@@ -39,12 +39,15 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 	{
 		m_expectedMotorLevel = motorLevel;
 	}
+	public double getExpectedMotorLevel(){
+		return m_expectedMotorLevel;
+	}
 	private double m_velocity;
 	/*public void setLastEncoder(double lastEncoder)
 	{
 		m_lastEncoders = lastEncoder;
 	}*/
-	private static double m_kP = 0.00075;//0.0005
+	private static double m_kP = 0.00125;//0.00075,0.001
 	private static double m_kI = 0.0000;//0.0001;
 	private static double m_kD = 0.000025;//0.001;
 	public double m_testSetPoint = 0.0;
@@ -152,6 +155,8 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
     	}
     	else
     	{
+    		//m_flywheelMotor1.set(1.0);
+    		//m_flywheelMotor2.set(-1.0);
     		double motorLevel = m_expectedMotorLevel + output;
     		if(motorLevel < 0)
     		{
@@ -163,7 +168,7 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
     		}
     		if(m_running){
     			m_flywheelMotor1.set(motorLevel);
-    			m_flywheelMotor2.set(motorLevel);
+    			m_flywheelMotor2.set(motorLevel*-1);
     		}else{
     			m_flywheelMotor1.set(0.0);
     			m_flywheelMotor2.set(0.0);

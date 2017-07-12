@@ -28,7 +28,7 @@ public class BallIntake extends Subsystem implements LogDataSource {
 	private SpeedController m_ballIntakeMotor2;
     public void setBallIntakeMotor(double x)
     {
-    	m_ballIntakeMotor.set(-1 * x);
+    	m_ballIntakeMotor.set(x);
     	m_ballIntakeMotor2.set(-1 * x);
     	m_motorOn = !(Math.abs(x) < 0.01);
     	
@@ -40,6 +40,9 @@ public class BallIntake extends Subsystem implements LogDataSource {
     }*/
     public void lowerBallIntake(){
     	m_ballIntakePiston.set(true);
+    }
+    public void raiseBallIntake(){
+    	m_ballIntakePiston.set(false);
     }
     
     private boolean m_motorOn;

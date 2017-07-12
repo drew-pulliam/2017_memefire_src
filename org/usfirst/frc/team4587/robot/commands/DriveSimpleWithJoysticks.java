@@ -32,8 +32,8 @@ public class DriveSimpleWithJoysticks extends Command {
     		driveStick = 0.0;
     	}
     	Robot.getDriveBaseSimple().arcadeDrive(driveStick, turnStick);
-    	SmartDashboard.putNumber("drive stick", Robot.getOI().getDrive());
-    	SmartDashboard.putNumber("turn stick", Robot.getOI().getTurn());
+    	SmartDashboard.putNumber("drive stick", Robot.getOI().getDrive()*0.3);
+    	SmartDashboard.putNumber("turn stick", Robot.getOI().getTurn()*0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()

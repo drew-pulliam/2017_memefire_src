@@ -25,7 +25,7 @@ public class HotDogs extends Subsystem {
 	private SpeedController m_hotDogMotor1;
 	public void setHotDogMotors(double x)
 	{
-		m_hotDogMotor0.set(x);
+		m_hotDogMotor0.set(x*-1);
 		m_hotDogMotor1.set(x);
 	}
     public HotDogs()

@@ -36,22 +36,16 @@ public class ToggleFlywheelRunning extends Command {
     	}
     	else
     	{
-    		System.out.println("running");
     		Robot.getFlywheel().initialize();
     		Robot.getFlywheel().enable();
-    		//Robot.getIndexer().enable();
     		Robot.getFlywheel().setRunning(true);
-    		//Robot.getIndexer().setRunning(true);
     		double m_motorLevel;
     		//m_rpms = SmartDashboard.getNumber("FlywheelVelocity", 1850);
         	//m_motorLevel = m_rpms / 6750 * 1.35;//6750 = max rpms
         	m_motorLevel =( m_rpms + 1000) / 6750 *1.1;//6750 = max rpms
         	Robot.getFlywheel().setSetpoint(m_rpms);
         	Robot.getFlywheel().setExpectedMotorLevel(m_motorLevel);
-        	//SmartDashboard.putNumber("Flywheel RPM's set to: ", m_rpms);
         	SmartDashboard.putNumber("FlywheelVelocity", m_rpms);
-        	//Robot.getIndexer().setSetpoint(m_rpms);
-        	//Robot.getIndexer().setExpectedMotorLevel(m_motorLevel);
         	System.out.println(m_rpms + " " + m_motorLevel + " setpoint: " + Robot.getFlywheel().getSetpoint());
     	}
     }

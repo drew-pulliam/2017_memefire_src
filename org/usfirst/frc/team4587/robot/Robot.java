@@ -3,6 +3,7 @@ package org.usfirst.frc.team4587.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -175,6 +176,23 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		}
 	}
 	String lastActiveState=ValueLogger.DISABLED_PHASE;
+
+	private static DigitalInput m_redBlueSwitch;
+	private static DigitalInput m_posSwitch1;
+	private static DigitalInput m_posSwitch2;
+	private static DigitalInput m_normalFancySwitch;
+	public static int getAllianceColor()
+    {
+    	return 1 - (1 * (m_redBlueSwitch.get() ? 1:0));
+    }
+	public static int getNormalFancy()
+    {
+    	return 1 - (1 * (m_normalFancySwitch.get() ? 1:0));
+    }
+	public static int getPos()
+    {
+    	return 3 - (1 * (m_posSwitch1.get() ? 1:0) + 2 * (m_posSwitch2.get() ? 1:0));
+    }
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -197,10 +215,14 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_hopperPiston = new HopperPiston();
 		m_LEDSolenoid = new LEDSolenoid();
 		//m_gearCameraThread = new GearCameraThread();
-		
 		m_PDP = new PowerDistributionPanel();
 		
 		Bling.initialize();
+
+		m_redBlueSwitch = new DigitalInput(RobotMap.RED_BLUE_SWITCH);
+		m_posSwitch1 = new DigitalInput(RobotMap.POSITION_SWITCH_1);
+		m_posSwitch2= new DigitalInput(RobotMap.POSITION_SWITCH_2);
+		m_normalFancySwitch = new DigitalInput(RobotMap.NORMAL_FANCY_SWITCH);
 		/*try
 		{
 			//m_arduino = new SerialPort(9600, SerialPort.Port.kUSB);
@@ -407,6 +429,14 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		SmartDashboard.putString("visionThreadState", m_visionCameraThread.getState().toString());
 		Scheduler.getInstance().run();
 		if ( logger != null ) logger.logValues(start);
+		SmartDashboard.putNumber("redBlue: ", getAllianceColor());
+		SmartDashboard.putNumber("autoPosition: ", getPos());
+		SmartDashboard.putNumber("normalFancy: ", getNormalFancy());
+		SmartDashboard.putBoolean("redBlueSwitch", m_redBlueSwitch.get());
+		SmartDashboard.putBoolean("posSwitch1", m_posSwitch1.get());
+		SmartDashboard.putBoolean("posSwitch2", m_posSwitch2.get());
+		SmartDashboard.putBoolean("normalFancySwitch", m_normalFancySwitch.get());
+		SmartDashboard.putNumber("d-pad", m_oi.getPOV());
 		/*
 		SmartDashboard.putNumber("Turret Encoder", m_turret.getEncoder());
 		SmartDashboard.putNumber("Turret Degrees", m_turret.getDegrees());

@@ -256,7 +256,7 @@ public class Aim extends Command {
 		turnControl.disable();
 		Robot.getDriveBaseSimple().setLeftMotor(0.0);
 		Robot.getDriveBaseSimple().setRightMotor(0.0);
-		Robot.getLEDSolenoid().LEDOff();
+		Robot.getLEDSolenoid().setFlashyMode(true);;
     }
 
     // Called when another command which requires one or more of the same

@@ -228,7 +228,7 @@ public class OI implements LogDataSource {
 	    	leftBumper2.whenPressed(new PulseLowGoalSolenoid(1000));
     	}*/
     }
-    private double getPOV(){
+    public double getPOV(){
     	return stick1.getPOV();
     }
     public double getTurn()

@@ -12,6 +12,7 @@ public class LEDRingDefaultCommand extends Command {
 	boolean on=false;
 	int count;
 	int pulseLength=10;
+	int pulses = 5;
 	boolean flashyMode;
     public LEDRingDefaultCommand() {
     	requires(Robot.getLEDSolenoid());
@@ -29,13 +30,17 @@ public class LEDRingDefaultCommand extends Command {
     	flashyMode = Robot.getLEDSolenoid().getFlashyMode();
     	if(flashyMode){
     		count++;
-    		if(count>pulseLength){
+    		if(count%pulseLength==0){
     			if(Robot.getLEDSolenoid().getLEDOn()){
     				Robot.getLEDSolenoid().LEDOff();
     			}else{
     				Robot.getLEDSolenoid().LEDOn();
     			}
-    			count = 0;
+    		}
+    		if(count>pulseLength*pulses){
+    			flashyMode = false;
+        		count=pulseLength;
+        		Robot.getLEDSolenoid().LEDOff();
     		}
     	}else{
     		count=pulseLength;
@@ -45,12 +50,11 @@ public class LEDRingDefaultCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.getBallIntake().setBallIntakeMotor(0.0);
     }
 
     // Called when another command which requires one or more of the same

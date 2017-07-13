@@ -44,6 +44,11 @@ public class RobotMap {
     public static final int ENCODER_LEFT_DRIVE_A = 0;
     public static final int ENCODER_LEFT_DRIVE_B = 1;
 
+    public static final int  RED_BLUE_SWITCH = 6;
+    public static final int  POSITION_SWITCH_1 = 7;
+    public static final int  POSITION_SWITCH_2 = 8;
+    public static final int  NORMAL_FANCY_SWITCH = 9;
+
     public static final double DRIVE_SENSITIVIY_HIGH = 0.2;
     public static final double DRIVE_SENSITIVIY_LOW = 0.2;
 	

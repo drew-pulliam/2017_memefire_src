@@ -80,6 +80,7 @@ public class AutoGearIntakeMotors extends Command {
     	//Robot.getGearIntake().setLEDMode();
     	//Robot.getGearIntake().gearIntakeUp();
     	Robot.getLEDSolenoid().LEDOff();
+    	Robot.getLEDSolenoid().setFlashyMode(true);
     }
 
     // Called when another command which requires one or more of the same

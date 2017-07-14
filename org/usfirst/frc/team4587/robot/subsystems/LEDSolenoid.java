@@ -24,6 +24,7 @@ public class LEDSolenoid extends Subsystem {
 
 	private Solenoid m_LEDRing;
 	boolean flashyMode=false;
+	boolean on = false;
 	public boolean getFlashyMode(){
 		return flashyMode;
 	}
@@ -32,7 +33,11 @@ public class LEDSolenoid extends Subsystem {
 	}
 
 	public boolean getLEDOn(){
-		return m_LEDRing.get()==true;
+		//return m_LEDRing.get()==true;
+		return on;
+	}
+	public void setOn(boolean x){
+		on = x;
 	}
 	public void LEDOn(){
 		m_LEDRing.set(true);

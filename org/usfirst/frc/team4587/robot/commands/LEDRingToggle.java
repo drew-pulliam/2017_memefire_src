@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LEDRingToggle extends Command {
 
-	boolean on=false;
+	boolean on;
     public LEDRingToggle() {
     	requires(Robot.getLEDSolenoid());
     }
@@ -17,12 +17,13 @@ public class LEDRingToggle extends Command {
     // Called just before this Command runs the first time
     protected void initialize() 
     {
+    	on = Robot.getLEDSolenoid().getLEDOn();
     	if(on){
-    		Robot.getLEDSolenoid().LEDOff();
     		on = false;
+    		Robot.getLEDSolenoid().setOn(on);
     	}else{
-    		Robot.getLEDSolenoid().LEDOn();
     		on = true;
+    		Robot.getLEDSolenoid().setOn(on);
     	}
     }
 
@@ -38,7 +39,6 @@ public class LEDRingToggle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.getBallIntake().setBallIntakeMotor(0.0);
     }
 
     // Called when another command which requires one or more of the same

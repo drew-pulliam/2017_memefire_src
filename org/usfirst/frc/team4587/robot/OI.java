@@ -105,23 +105,33 @@ public class OI implements LogDataSource {
     	leftTrigger2.whenPressed(new BallIntakeUnJam());
     	rightTrigger2.whenPressed(new BallIntakeOut());
     	*/
+    	//done
     	buttonA1.whenPressed(new AutoGearIntakeMotors());
     	buttonB1.whenPressed(new GearIntakeIdle());
-    	//buttonX1.whenPressed(new BallIntakeOn());//vision+flywheel spin up
-    	//buttonY1.whenPressed(new BallIntakeOff());//flywheel spin up (no vision if camera breaks)
+    	buttonX1.whenPressed(new HopperOut());
+    	buttonY1.whenPressed(new HopperIn());
     	rightBumper1.whenPressed(new EjectGear());
     	leftBumper1.whileHeld(new ClimbMotorStart());
-    	rightTrigger1.whenPressed(new ToggleGearIntakeUpDown());
-    	leftTrigger1.whileHeld(new BallIntakeOut());//held=rollers all on=shoot, w/o flywheel control or vision
+    	rightTrigger1.whenPressed(new AimAndShoot());
+    	leftTrigger1.whenPressed(new Shoot());
 
-    	buttonA2.whenPressed(new ToggleFlywheelRunning(true, 3020));
-    	buttonB2.whenPressed(new ToggleFlywheelRunning(false, 0));
+    	//buttonA2.whenPressed(new ToggleFlywheelRunning(true, 3020));
+    	//buttonB2.whenPressed(new ToggleFlywheelRunning(false, 0));
     	//buttonX2.whenPressed(new ShintakeAndHotDogsToggle());
-    	buttonX2.whenPressed(new ShootBalls());
-    	buttonY2.whenPressed(new BallIntakeToggle());
-    	//leftBumper2.whenPressed(new Aim());
+    	//buttonX2.whenPressed(new ShootBalls());
+    	//buttonY2.whenPressed(new BallIntakeToggle());
+    	
+    	buttonA2.whenPressed(new BallIntakeOn());
+    	buttonB2.whenPressed(new BallIntakeOff());
+    	buttonX2.whenPressed(new GearIntakeSetMotor(1.0));
+    	buttonY2.whenPressed(new GearIntakeSetMotor(0.0));
     	leftBumper2.whenPressed(new BallIntakeDown());
     	rightBumper2.whenPressed(new LEDRingToggle());
+    	//buttonX2.whenPressed(new Aim());
+    	//buttonY2.whenPressed(new AimDist());
+    	
+    	//leftBumper2.whenPressed(new Aim());
+    	//rightBumper2.whenPressed(new ShootBalls());
     	/*
     	rightTrigger2.whenPressed(new BallIntakeHeld());
     	rightBumper2.whenPressed(new HopperOut());
@@ -246,6 +256,10 @@ public class OI implements LogDataSource {
     public double getDrive()
     {
     	return stick1.getRawAxis(1) * -1;
+    }
+    public double getDrive2()
+    {
+    	return stick2.getRawAxis(1) * -1;
     }
     
     public void rumble( float value )

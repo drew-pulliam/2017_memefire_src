@@ -47,9 +47,9 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 	{
 		m_lastEncoders = lastEncoder;
 	}*/
-	private static double m_kP = 0.00125;//0.00075,0.001
-	private static double m_kI = 0.0000;//0.0001;
-	private static double m_kD = 0.000025;//0.001;
+	private static double m_kP = 0.007;//0.007
+	private static double m_kI = 0.00025;//0.0001;
+	private static double m_kD = 0.00225;//0.001;
 	public double m_testSetPoint = 0.0;
 	double encoderNow;
 	long timeNow;

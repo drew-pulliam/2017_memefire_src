@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LEDRingDefaultCommand extends Command {
 
-	boolean on=false;
 	int count;
-	int pulseLength=10;
-	int pulses = 5;
+	int pulseLength=7;
+	int pulses = 10;
 	boolean flashyMode;
+	boolean on;
     public LEDRingDefaultCommand() {
     	requires(Robot.getLEDSolenoid());
     }
@@ -21,13 +21,14 @@ public class LEDRingDefaultCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	count=pulseLength;
+    	count=pulseLength-1;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
     	flashyMode = Robot.getLEDSolenoid().getFlashyMode();
+    	on = Robot.getLEDSolenoid().getLEDOn();
     	if(flashyMode){
     		count++;
     		if(count%pulseLength==0){
@@ -39,11 +40,14 @@ public class LEDRingDefaultCommand extends Command {
     		}
     		if(count>pulseLength*pulses){
     			flashyMode = false;
+    			Robot.getLEDSolenoid().setFlashyMode(false);
         		count=pulseLength;
         		Robot.getLEDSolenoid().LEDOff();
     		}
+    	}else if(on){
+    		Robot.getLEDSolenoid().LEDOn();
     	}else{
-    		count=pulseLength;
+    		count=pulseLength-1;
     		Robot.getLEDSolenoid().LEDOff();
     	}
     }

@@ -7,18 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BallIntakeOn extends Command {
+public class GearIntakeSetMotor extends Command {
 
-
-    public BallIntakeOn() {
-    	requires(Robot.getBallIntake());
+	double m_motorLevel;
+    public GearIntakeSetMotor(double motorLevel) {
+    	requires(Robot.getGearIntake());
     	//requires(Robot.getHotDogs());
+    	m_motorLevel = motorLevel;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	Robot.getBallIntake().setBallIntakeMotor(0.6);
+    	Robot.getGearIntake().setGearIntakeMotor(m_motorLevel);
     	//Robot.getHotDogs().setHotDogMotors(1.0);
     }
 

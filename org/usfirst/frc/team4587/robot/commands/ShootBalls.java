@@ -16,9 +16,10 @@ public class ShootBalls extends Command {
 	int recoveryTime=30;//units = 20ms cycles
 	double flywheelExpectedMotor;
 	double motorLevelBoost=0.25;
-    public ShootBalls() {
+    public ShootBalls(boolean x) {
     	requires(Robot.getHotDogs());
     	requires(Robot.getFeeder());
+    	on = x;
     }
 
     // Called just before this Command runs the first time
@@ -26,17 +27,15 @@ public class ShootBalls extends Command {
     {
     	count=0;
     	end = false;
-    	if(on){
+    	if(on==false){
     		Robot.getHotDogs().setHotDogMotors(0.0);
     		Robot.getFeeder().setFeederMotor(0.0);
-    		on = false;
     		end = true;
     	}else{
     		flywheelExpectedMotor = Robot.getFlywheel().getExpectedMotorLevel();
     		Robot.getFlywheel().setExpectedMotorLevel(flywheelExpectedMotor+motorLevelBoost);
     		Robot.getHotDogs().setHotDogMotors(1.0);
     		Robot.getFeeder().setFeederMotor(1.0);
-    		on = true;
     	}
     }
 

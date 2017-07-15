@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import utility.BallCameraThread;
 import utility.Bling;
 import utility.GearCameraThread;
 import utility.Gyro;
@@ -23,10 +24,12 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.usfirst.frc.team4587.robot.commands.Aim;
+import org.usfirst.frc.team4587.robot.commands.Auto1678;
 import org.usfirst.frc.team4587.robot.commands.AutoGearBayou;
 import org.usfirst.frc.team4587.robot.commands.AutoGearCenter;
 import org.usfirst.frc.team4587.robot.commands.AutoGearSide;
 import org.usfirst.frc.team4587.robot.commands.AutoGearSide1;
+import org.usfirst.frc.team4587.robot.commands.AutoHopper;
 import org.usfirst.frc.team4587.robot.commands.AutoMobility;
 import org.usfirst.frc.team4587.robot.commands.AutonomousTRI;
 import org.usfirst.frc.team4587.robot.subsystems.DriveBaseSimple;
@@ -118,6 +121,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	private static VisionCameraThread m_visionCameraThread;
 	public static VisionCameraThread getVisionCameraThread(){
 		return m_visionCameraThread;
+	}
+	private static BallCameraThread m_ballCameraThread;
+	public static BallCameraThread getBallCameraThread(){
+		return m_ballCameraThread;
 	}
 	static long[] times=null;
 	public static long getTime(int index){
@@ -215,6 +222,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_hopperPiston = new HopperPiston();
 		m_LEDSolenoid = new LEDSolenoid();
 		//m_gearCameraThread = new GearCameraThread();
+		//m_ballCameraThread = new BallCameraThread();
 		m_PDP = new PowerDistributionPanel();
 		
 		Bling.initialize();
@@ -299,10 +307,12 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		initializeNewPhase(ValueLogger.DISABLED_PHASE);
 		Bling.sendData((byte)69);
 		//m_turret.disable();
-		if(m_visionCameraThread!=null){
+		/*if(m_visionCameraThread!=null){
 			m_visionCameraThread.turnOff();
+		}*/
+		if(m_ballCameraThread!=null){
+			m_ballCameraThread.setRunning(false);
 		}
-		
 		Robot.getFlywheel().setRunning(false);
 		Robot.getFlywheel().disable();
 		Robot.getFlywheel().setSetpoint(0.0);
@@ -348,9 +358,16 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		//autonomousCommand = new AutoGearCenter();
 		//autonomousCommand = new HopperAuto("blue");
 		//autonomousCommand = new AutonomousTRI();
-		m_visionCameraThread = new VisionCameraThread();
-		m_visionCameraThread.start();
-		autonomousCommand = new Aim();
+		//m_visionCameraThread = new VisionCameraThread();
+		//m_visionCameraThread.start();
+		if(m_ballCameraThread==null){
+			m_ballCameraThread = new BallCameraThread();
+			m_ballCameraThread.start();
+		}
+		m_ballCameraThread.setRunning(true);
+		autonomousCommand = new AutoHopper();
+		//autonomousCommand = new Auto1678("red");
+		//autonomousCommand = new AutoGearSide1("left");
 		//autonomousCommand = new AutoMobility();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -387,8 +404,20 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		m_visionCameraThread = new VisionCameraThread();
-		m_visionCameraThread.start();
+		//m_visionCameraThread = new VisionCameraThread();
+		//m_visionCameraThread.start();
+		m_hotDogs.setHotDogMotors(0.0);
+		m_feeder.setFeederMotor(0.0);
+		m_flywheel.setRunning(false);
+		m_flywheel.setSetpoint(0.0);
+		m_flywheel.disable();
+		
+		if(m_ballCameraThread==null){
+			m_ballCameraThread = new BallCameraThread();
+			m_ballCameraThread.start();
+		}
+		
+		m_ballCameraThread.setRunning(true);
 		
 		
 		System.out.println("init");
@@ -425,8 +454,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 	public void teleopPeriodic() {
 		long start = System.nanoTime();
 		boolean on = true;
-		SmartDashboard.putBoolean("visionThreadIsAlive", m_visionCameraThread.isAlive());
-		SmartDashboard.putString("visionThreadState", m_visionCameraThread.getState().toString());
+		//SmartDashboard.putBoolean("visionThreadIsAlive", m_visionCameraThread.isAlive());
+		//SmartDashboard.putString("visionThreadState", m_visionCameraThread.getState().toString());
 		Scheduler.getInstance().run();
 		if ( logger != null ) logger.logValues(start);
 		SmartDashboard.putNumber("redBlue: ", getAllianceColor());

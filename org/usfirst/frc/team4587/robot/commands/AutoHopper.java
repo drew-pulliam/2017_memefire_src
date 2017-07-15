@@ -6,10 +6,9 @@ import utility.Gyro;
 /**
  *
  */
-public class AimAndShoot extends CommandGroup {
+public class AutoHopper extends CommandGroup {
 
-    public AimAndShoot() {
-    	
+    public AutoHopper() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -26,9 +25,16 @@ public class AimAndShoot extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	//addSequential(new AutonomousDriveStraightDistance(100, 0.55));
+    	//addSequential(new BallIntakeDown());
+    	addSequential(new FollowChezyPath("hopperPath",true,false,-1,0));
+    	addSequential(new Delay(10));
+    	addSequential(new HopperOut());
+    	//addSequential(new AutonomousTurnSimple(15));
     	addSequential(new Aim());
-    	addSequential(new ToggleFlywheelRunning(true, 3020));
-    	addSequential(new AimDist());
-    	addSequential(new ShootBalls(true));
+    	//addSequential(new Shoot());
+    	/*addSequential(new Delay(25));
+    	addSequential(new ToggleGearIntakeMotors());
+    	addSequential(new FollowChezyPath(1));*/
     }
 }

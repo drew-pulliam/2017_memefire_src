@@ -19,6 +19,7 @@ import utility.ValueLogger;
  */
 public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 
+	public boolean on = false;
 	private SpeedController m_flywheelMotor1;
 	private SpeedController m_flywheelMotor2;
 	//private SpeedController m_flywheelMotor3;

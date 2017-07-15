@@ -108,8 +108,8 @@ public class OI implements LogDataSource {
     	//done
     	buttonA1.whenPressed(new AutoGearIntakeMotors());
     	buttonB1.whenPressed(new GearIntakeIdle());
-    	buttonX1.whenPressed(new HopperOut());
-    	buttonY1.whenPressed(new HopperIn());
+    	buttonX1.whenPressed(new ShooterOff());
+    	//buttonY1.whenPressed(new HopperIn());
     	rightBumper1.whenPressed(new EjectGear());
     	leftBumper1.whileHeld(new ClimbMotorStart());
     	rightTrigger1.whenPressed(new AimAndShoot());
@@ -123,10 +123,16 @@ public class OI implements LogDataSource {
     	
     	buttonA2.whenPressed(new BallIntakeOn());
     	buttonB2.whenPressed(new BallIntakeOff());
+    	//buttonA2.whenPressed(new Aim());
+    	//buttonB2.whenPressed(new AimDist());
     	buttonX2.whenPressed(new GearIntakeSetMotor(1.0));
     	buttonY2.whenPressed(new GearIntakeSetMotor(0.0));
     	leftBumper2.whenPressed(new BallIntakeDown());
     	rightBumper2.whenPressed(new LEDRingToggle());
+    	leftTrigger2.whenPressed(new HopperOut());
+    	rightTrigger2.whenPressed(new HopperIn());
+    	//rightBumper2.whenPressed(new FollowChezyPath("hopperPath",true,false,-1,0));
+    	//rightBumper2.whenPressed(new FollowChezyPath("1678Path",true,true,1,0));
     	//buttonX2.whenPressed(new Aim());
     	//buttonY2.whenPressed(new AimDist());
     	

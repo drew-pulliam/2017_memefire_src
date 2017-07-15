@@ -19,8 +19,8 @@ public class AimDist extends Command {
 	private double height;
 	private double[] values;
 	private int desiredHeight=120;
-	double tolerance = 10;
-	double maxSpeed = 0.25;
+	double tolerance = 5;
+	double maxSpeed = 0.2;
 	int count;
     public AimDist() {
     	
@@ -37,14 +37,14 @@ public class AimDist extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	values = Robot.getVisionCameraThread().getValues();
+    	//values = Robot.getVisionCameraThread().getValues();
     	//picTime = values[0];
     	//centerline = values[1];
-    	height = values[2];
+    	height = Robot.getBallCameraThread().getBallHeight();//values[2];
 
 
-		double left = maxSpeed*(height<desiredHeight?1:-1);
-		double right = maxSpeed*(height<desiredHeight?1:-1);
+		double left = maxSpeed*(height<desiredHeight?-1:1);
+		double right = maxSpeed*(height<desiredHeight?-1:1);
 		Robot.getDriveBaseSimple().setLeftMotor(left);
 		Robot.getDriveBaseSimple().setRightMotor(right);
     }

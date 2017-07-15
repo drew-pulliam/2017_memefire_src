@@ -18,7 +18,7 @@ public class BallIntakeOn extends Command {
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	Robot.getBallIntake().setBallIntakeMotor(0.6);
+    	Robot.getBallIntake().setBallIntakeMotor(0.75);
     	//Robot.getHotDogs().setHotDogMotors(1.0);
     }
 

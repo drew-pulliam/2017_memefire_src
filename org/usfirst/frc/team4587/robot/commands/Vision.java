@@ -6,9 +6,9 @@ import utility.Gyro;
 /**
  *
  */
-public class AimAndShoot extends CommandGroup {
+public class Vision extends CommandGroup {
 
-    public AimAndShoot() {
+    public Vision() {
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -27,8 +27,8 @@ public class AimAndShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new Aim());
-    	addSequential(new ToggleFlywheelRunning(true, 3020));
+    	//addSequential(new ToggleFlywheelRunning(true, 3020));
     	addSequential(new AimDist());
-    	addSequential(new ShootBalls(true));
+    	//addSequential(new ShootBalls(true));
     }
 }

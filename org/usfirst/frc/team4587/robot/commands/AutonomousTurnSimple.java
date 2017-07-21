@@ -36,11 +36,11 @@ public class AutonomousTurnSimple extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(m_desiredAngle<0){
-    		Robot.getDriveBaseSimple().setLeftMotor(-0.4);
-    		Robot.getDriveBaseSimple().setRightMotor(0.4);
+    		Robot.getDriveBaseSimple().setLeftMotor(-0.7);
+    		Robot.getDriveBaseSimple().setRightMotor(0.7);
     	}else{
-    		Robot.getDriveBaseSimple().setLeftMotor(0.4);
-    		Robot.getDriveBaseSimple().setRightMotor(-0.4);
+    		Robot.getDriveBaseSimple().setLeftMotor(0.7);
+    		Robot.getDriveBaseSimple().setRightMotor(-0.7);
     	}
     }
 

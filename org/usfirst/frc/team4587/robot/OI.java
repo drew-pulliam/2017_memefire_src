@@ -114,6 +114,7 @@ public class OI implements LogDataSource {
     	leftBumper1.whileHeld(new ClimbMotorStart());
     	rightTrigger1.whenPressed(new AimAndShoot());
     	leftTrigger1.whenPressed(new Shoot());
+    	leftTrigger1.whenReleased(new ShooterOff());
 
     	//buttonA2.whenPressed(new ToggleFlywheelRunning(true, 3020));
     	//buttonB2.whenPressed(new ToggleFlywheelRunning(false, 0));

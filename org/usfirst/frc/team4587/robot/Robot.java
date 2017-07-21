@@ -365,9 +365,10 @@ public class Robot extends IterativeRobot implements LogDataSource {
 			m_ballCameraThread.start();
 		}
 		m_ballCameraThread.setRunning(true);
-		autonomousCommand = new AutoHopper();
-		//autonomousCommand = new Auto1678("red");
-		//autonomousCommand = new AutoGearSide1("left");
+		
+		//autonomousCommand = new AutoHopper("red");
+		//autonomousCommand = new Auto1678("blue");
+		autonomousCommand = new AutoGearSide1("left");
 		//autonomousCommand = new AutoMobility();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

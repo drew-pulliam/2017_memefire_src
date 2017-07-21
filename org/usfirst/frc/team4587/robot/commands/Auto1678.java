@@ -34,18 +34,28 @@ public class Auto1678 extends CommandGroup {
     	//addSequential(new AutonomousDriveStraightDistance(100, 0.55));
     	if(blue){
         	addSequential(new FollowChezyPath("1678Path0",true,false,-1,0));
-        	//addSequential(new BallIntakeDown());
+        	addSequential(new BallIntakeDown());
         	addSequential(new EjectGear());
         	addSequential(new FollowChezyPath("1678Path1",true,false,-1,0));
-        	addSequential(new AimAndShoot());
-        	//addSequential(new Shoot());
+        	//addSequential(new AimAndShoot());
+        	addSequential(new Shoot());
+        	addSequential(new BallIntakeOn());
+        	addSequential(new Delay(150));
+        	addSequential(new ShooterOff());
+        	addSequential(new AutonomousTurnSimple(-90));
+        	addSequential(new FollowChezyPath("1678Path2",true,false,-1,Gyro.getYaw()));
     	}else{
         	addSequential(new FollowChezyPath("1678Path0",true,true,1,0));
-        	//addSequential(new BallIntakeDown());
+        	addSequential(new BallIntakeDown());
         	addSequential(new EjectGear());
         	addSequential(new FollowChezyPath("1678Path1",true,true,1,0));
-        	addSequential(new AimAndShoot());
-        	//addSequential(new Shoot());
+        	//addSequential(new AimAndShoot());
+        	addSequential(new Shoot());
+        	addSequential(new BallIntakeOn());
+        	addSequential(new Delay(150));
+        	addSequential(new ShooterOff());
+        	addSequential(new AutonomousTurnSimple(90));
+        	addSequential(new FollowChezyPath("1678Path2",true,true,1,Gyro.getYaw()));
     	}
     	//addSequential(new Delay(10));
     	//addSequential(new HopperOut());

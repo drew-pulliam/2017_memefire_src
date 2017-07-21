@@ -29,7 +29,7 @@ public class Shoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new ToggleFlywheelRunning(true, 2970));
-    	addSequential(new Delay(25));
+    	addSequential(new DelayUntilSpedUp());
     	addSequential(new ShootBalls(true));
     }
 }

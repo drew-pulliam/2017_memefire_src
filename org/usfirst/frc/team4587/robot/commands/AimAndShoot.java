@@ -27,8 +27,9 @@ public class AimAndShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new Aim());
-    	addSequential(new ToggleFlywheelRunning(true, 3020));
+    	addSequential(new ToggleFlywheelRunning(true, 2970));
     	addSequential(new AimDist());
+    	addSequential(new DelayUntilSpedUp());
     	addSequential(new ShootBalls(true));
     }
 }

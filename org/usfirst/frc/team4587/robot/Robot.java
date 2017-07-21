@@ -223,6 +223,13 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_LEDSolenoid = new LEDSolenoid();
 		//m_gearCameraThread = new GearCameraThread();
 		//m_ballCameraThread = new BallCameraThread();
+		if(m_ballCameraThread==null){
+			m_ballCameraThread = new BallCameraThread();
+			m_ballCameraThread.start();
+		}
+	
+		m_ballCameraThread.setRunning(true);
+		
 		m_PDP = new PowerDistributionPanel();
 		
 		Bling.initialize();
@@ -310,9 +317,9 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		/*if(m_visionCameraThread!=null){
 			m_visionCameraThread.turnOff();
 		}*/
-		if(m_ballCameraThread!=null){
+	/*	if(m_ballCameraThread!=null){
 			m_ballCameraThread.setRunning(false);
-		}
+		}*/
 		Robot.getFlywheel().setRunning(false);
 		Robot.getFlywheel().disable();
 		Robot.getFlywheel().setSetpoint(0.0);
@@ -360,15 +367,15 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		//autonomousCommand = new AutonomousTRI();
 		//m_visionCameraThread = new VisionCameraThread();
 		//m_visionCameraThread.start();
-		if(m_ballCameraThread==null){
+	/*	if(m_ballCameraThread==null){
 			m_ballCameraThread = new BallCameraThread();
 			m_ballCameraThread.start();
 		}
 		m_ballCameraThread.setRunning(true);
-		
+		*/
 		//autonomousCommand = new AutoHopper("red");
 		//autonomousCommand = new Auto1678("blue");
-		autonomousCommand = new AutoGearSide1("left");
+	//	autonomousCommand = new AutoGearSide1("left");
 		//autonomousCommand = new AutoMobility();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -412,14 +419,14 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		m_flywheel.setRunning(false);
 		m_flywheel.setSetpoint(0.0);
 		m_flywheel.disable();
-		
+		/*
 		if(m_ballCameraThread==null){
 			m_ballCameraThread = new BallCameraThread();
 			m_ballCameraThread.start();
 		}
 		
 		m_ballCameraThread.setRunning(true);
-		
+		*/
 		
 		System.out.println("init");
 		//m_turret.enable();

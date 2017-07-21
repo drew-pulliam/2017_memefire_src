@@ -44,6 +44,11 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 		return m_expectedMotorLevel;
 	}
 	private double m_velocity;
+	private boolean m_atSpeed;
+	private double m_atSpeedTolerance = 50;
+	public boolean atSpeed(){
+		return m_atSpeed;
+	}
 	/*public void setLastEncoder(double lastEncoder)
 	{
 		m_lastEncoders = lastEncoder;
@@ -140,6 +145,7 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
     	if(m_velocity > getSetpoint()){
     		m_expectedMotorLevel = (m_expectedMotorLevel + m_flywheelMotor1.get()) / 2;
     	}*/
+    	m_atSpeed = Math.abs(m_velocity-getSetpoint()) < m_atSpeedTolerance;
     	return m_velocity;
     	//encoder delta (velocity)
     }

@@ -25,7 +25,6 @@ public class Aim extends Command {
 	double tolerance = 10;
 	double maxSpeed = 0.35;
 	int count;
-	int count2;
 
     public Aim() {
     	
@@ -39,7 +38,7 @@ public class Aim extends Command {
     protected void initialize() {
     	Robot.getLEDSolenoid().LEDOn();
     	count =0;
-    	count2=0;
+    	//Robot.getBallCameraThread().setRunning(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,12 +57,17 @@ public class Aim extends Command {
 		double right = maxSpeed*(leftRight<0?1:-1);
 		Robot.getDriveBaseSimple().setLeftMotor(left);
 		Robot.getDriveBaseSimple().setRightMotor(right);
+		if(Math.abs(centerline - desiredCenterline)<=tolerance){
+			count++;
+		}else{
+			count = 0;
+		}
     }
     
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(centerline - desiredCenterline)<=tolerance;
+    	return count > 10;
     }
 
     // Called once after isFinished returns true

@@ -134,8 +134,10 @@ public class CheesyDriveHelper {
       leftPwm += overPower * (-1.0 - rightPwm);
       rightPwm = -1.0;
     }
-    drive.setLeftRightPower(leftPwm, rightPwm*-1);
-
+    if(Math.abs(leftPwm)>0&&Math.abs(rightPwm)>0){
+    	drive.setLeftRightPower(leftPwm, rightPwm*-1);
+    	System.out.println("leftPwm: "+leftPwm+" rightPwm: "+(rightPwm*-1));
+    }
   }
 
   public double handleDeadband(double val, double deadband) {

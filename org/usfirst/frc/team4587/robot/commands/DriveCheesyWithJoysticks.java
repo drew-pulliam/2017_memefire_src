@@ -11,6 +11,7 @@ import utility.CheesyDriveHelper;
  */
 public class DriveCheesyWithJoysticks extends Command {
 
+	double deadband = 0.02;
     public DriveCheesyWithJoysticks() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -27,24 +28,24 @@ public class DriveCheesyWithJoysticks extends Command {
     	boolean quickTurn;
     	double driveStick = Robot.getOI().getDrive()*-1;
     	double turnStick = Robot.getOI().getTurn()*-1;
-    	if(Math.abs(turnStick) <= 0.02){
+    	if(Math.abs(turnStick) <= deadband){
     		turnStick = 0.0;
     	}else{
-    		if(turnStick >= 0.02){
+    		if(turnStick >= deadband){
             	turnStick = (turnStick*0.8)+0.2;
-    		}else if(turnStick <= -0.02){
+    		}else if(turnStick <= -deadband){
             	turnStick = (turnStick*0.8)-0.2;
     		}
     	}
-    	if(Math.abs(driveStick) <= 0.02){
+    	if(Math.abs(driveStick) <= deadband){
     		quickTurn = true;
     		driveStick = 0.0;
     		turnStick *= Math.abs(turnStick);
     	}else{
     		quickTurn = false;
-    		if(driveStick >= 0.02){
+    		if(driveStick >= deadband){
     	    	driveStick = (driveStick*0.95)+0.05;
-    		}else if(driveStick <= -0.02){
+    		}else if(driveStick <= -deadband){
     	    	driveStick = (driveStick*0.95)-0.05;
     		}
     	}

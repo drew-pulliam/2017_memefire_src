@@ -37,9 +37,9 @@ public class Auto1678 extends CommandGroup {
         	addSequential(new BallIntakeDown());
         	addSequential(new EjectGear());
         	addSequential(new FollowChezyPath("1678Path1",true,false,-1,0));
-        	//addSequential(new AimAndShoot());
-        	addSequential(new Shoot());
-        	addSequential(new BallIntakeOn());
+        	addSequential(new AimAndShoot());
+        	//addSequential(new Shoot());
+        	//addSequential(new BallIntakeOn());
         	addSequential(new Delay(150));
         	addSequential(new ShooterOff());
         	addSequential(new AutonomousTurnSimple(-90));
@@ -49,9 +49,9 @@ public class Auto1678 extends CommandGroup {
         	addSequential(new BallIntakeDown());
         	addSequential(new EjectGear());
         	addSequential(new FollowChezyPath("1678Path1",true,true,1,0));
-        	//addSequential(new AimAndShoot());
-        	addSequential(new Shoot());
-        	addSequential(new BallIntakeOn());
+        	addSequential(new AimAndShoot());
+        	//addSequential(new Shoot());
+        	//addSequential(new BallIntakeOn());
         	addSequential(new Delay(150));
         	addSequential(new ShooterOff());
         	addSequential(new AutonomousTurnSimple(90));

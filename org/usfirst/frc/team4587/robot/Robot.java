@@ -373,7 +373,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		}
 		m_ballCameraThread.setRunning(true);
 		*/
-		//autonomousCommand = new AutoHopper("red");
+		autonomousCommand = new AutoHopper("blue");
 		//autonomousCommand = new Auto1678("blue");
 	//	autonomousCommand = new AutoGearSide1("left");
 		//autonomousCommand = new AutoMobility();

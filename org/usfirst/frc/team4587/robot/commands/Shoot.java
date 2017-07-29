@@ -31,5 +31,7 @@ public class Shoot extends CommandGroup {
     	addSequential(new ToggleFlywheelRunning(true, 2970));
     	addSequential(new DelayUntilSpedUp());
     	addSequential(new ShootBalls(true));
+    	addSequential(new Delay(100));
+    	addSequential(new BallIntakeOn());
     }
 }

@@ -136,8 +136,8 @@ public class DriveBaseSimple extends Subsystem implements LogDataSource {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
-    	//setDefaultCommand(new DriveSimpleWithJoysticks());
-    	setDefaultCommand(new DriveCheesyWithJoysticks());
+    	setDefaultCommand(new DriveSimpleWithJoysticks());
+    	//setDefaultCommand(new DriveCheesyWithJoysticks());
     }
 }
 

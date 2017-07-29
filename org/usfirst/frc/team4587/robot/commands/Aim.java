@@ -21,7 +21,7 @@ public class Aim extends Command {
 	private double height;
 	private double[] values;
 	private double pixelsToDegrees=0.125;
-	private int desiredCenterline=160;
+	private int desiredCenterline=175;
 	double tolerance = 10;
 	double maxSpeed = 0.35;
 	int count;
@@ -67,7 +67,7 @@ public class Aim extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return count > 10;
+    	return count > 0;
     }
 
     // Called once after isFinished returns true

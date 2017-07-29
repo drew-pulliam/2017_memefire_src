@@ -35,6 +35,7 @@ public class AutonomousTurnSimple extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	count++;
     	if(m_desiredAngle<0){
     		Robot.getDriveBaseSimple().setLeftMotor(-0.7);
     		Robot.getDriveBaseSimple().setRightMotor(0.7);
@@ -46,7 +47,7 @@ public class AutonomousTurnSimple extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(m_startAngle+m_desiredAngle-Gyro.getYaw())<tolerance;
+    	return Math.abs(m_startAngle+m_desiredAngle-Gyro.getYaw())<tolerance||count>100;
     }
 
     // Called once after isFinished returns true

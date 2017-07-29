@@ -45,7 +45,7 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 	}
 	private double m_velocity;
 	private boolean m_atSpeed;
-	private double m_atSpeedTolerance = 50;
+	private double m_atSpeedTolerance = 100;
 	public boolean atSpeed(){
 		return m_atSpeed;
 	}

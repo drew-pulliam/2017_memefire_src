@@ -31,5 +31,7 @@ public class AimAndShoot extends CommandGroup {
     	addSequential(new AimDist());
     	addSequential(new DelayUntilSpedUp());
     	addSequential(new ShootBalls(true));
+    	addSequential(new Delay(100));
+    	addSequential(new BallIntakeOn());
     }
 }

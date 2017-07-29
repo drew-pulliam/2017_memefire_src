@@ -102,14 +102,14 @@ public class OI implements LogDataSource {
     	buttonY2.whenPressed(new ToggleFlywheelRunning(false,0));
     	leftBumper2.whenPressed(new BallIntakeOn());
     	//rightBumper2.whenPressed(new ToggleHopperInOut());
-    	leftTrigger2.whenPressed(new BallIntakeUnJam());
+    	leftTrigger2.whenPressed(new BallIntakeUnJam(m));
     	rightTrigger2.whenPressed(new BallIntakeOut());
     	*/
     	//done
     	buttonA1.whenPressed(new AutoGearIntakeMotors());
     	buttonB1.whenPressed(new GearIntakeIdle());
     	buttonX1.whenPressed(new ShooterOff());
-    	//buttonY1.whenPressed(new HopperIn());
+    	//buttonY1.whenPressed(new Vision());
     	rightBumper1.whenPressed(new EjectGear());
     	leftBumper1.whileHeld(new ClimbMotorStart());
     	rightTrigger1.whenPressed(new AimAndShoot());
@@ -122,12 +122,14 @@ public class OI implements LogDataSource {
     	//buttonX2.whenPressed(new ShintakeAndHotDogsToggle());
     	//buttonX2.whenPressed(new ShootBalls());
     	//buttonY2.whenPressed(new BallIntakeToggle());
-    	
+    	/*
     	buttonA2.whenPressed(new Aim());
     	buttonB2.whenPressed(new AimDist());
     	buttonX2.whenPressed(new LEDRingToggle());
     	buttonY2.whenPressed(new Vision());
-      /*  buttonA2.whenPressed(new BallIntakeOn());
+    	*/
+    	
+        buttonA2.whenPressed(new BallIntakeOn());
         buttonB2.whenPressed(new BallIntakeOff());
     	buttonX2.whenPressed(new GearIntakeSetMotor(1.0));
     	buttonY2.whenPressed(new GearIntakeSetMotor(0.0));
@@ -135,7 +137,9 @@ public class OI implements LogDataSource {
     	rightBumper2.whenPressed(new LEDRingToggle());
     	leftTrigger2.whenPressed(new HopperOut());
     	rightTrigger2.whenPressed(new HopperIn());
-    	*/
+    	
+    	//buttonA2.whenPressed(new BumpTest("blue"));
+    	//buttonB2.whenPressed(new BumpTest("red"));
     	
     	//rightBumper2.whenPressed(new FollowChezyPath("hopperPath",true,false,-1,0));
     	//rightBumper2.whenPressed(new FollowChezyPath("1678Path",true,true,1,0));

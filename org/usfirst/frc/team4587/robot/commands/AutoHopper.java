@@ -34,25 +34,25 @@ public class AutoHopper extends CommandGroup {
     	//addSequential(new AutonomousDriveStraightDistance(100, 0.55));
     	//addSequential(new BallIntakeDown());
     	if(blue){
+        	addSequential(new BallIntakeDown());
         	addSequential(new FollowChezyPath("hopperPath",true,false,-1,0));
-        	addSequential(new Delay(10));
         	addSequential(new ToggleFlywheelRunning(true, 3020));
+        	addSequential(new AutonomousTurnSimple(-20));
         	addSequential(new HopperOut());
-        	//addSequential(new AutonomousTurnSimple(15));
-        	//addSequential(new AimAndShoot());
+        	addSequential(new Delay(10));
         	addSequential(new AutonomousTurnSimple(15));
         	addSequential(new ShootBalls(true));
-        	//addSequential(new Aim());
+        	//addSequential(new Vision());
     	}else{
+        	addSequential(new BallIntakeDown());
         	addSequential(new FollowChezyPath("hopperPath",true,true,1,0));
-        	addSequential(new Delay(10));
         	addSequential(new ToggleFlywheelRunning(true, 3020));
+        	addSequential(new AutonomousTurnSimple(20));
         	addSequential(new HopperOut());
-        	//addSequential(new AutonomousTurnSimple(15));
-        	//addSequential(new AimAndShoot());
+        	addSequential(new Delay(10));
         	addSequential(new AutonomousTurnSimple(-15));
         	addSequential(new ShootBalls(true));
-        	//addSequential(new Aim());
+        	//addSequential(new Vision());
     	}
     	//addSequential(new Shoot());
     	/*addSequential(new Delay(25));

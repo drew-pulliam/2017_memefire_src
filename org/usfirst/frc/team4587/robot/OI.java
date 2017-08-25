@@ -134,11 +134,10 @@ public class OI implements LogDataSource {
     	buttonX2.whenPressed(new GearIntakeSetMotor(1.0));
     	buttonY2.whenPressed(new GearIntakeSetMotor(0.0));
     	leftBumper2.whenPressed(new BallIntakeDown());
-    	rightBumper2.whenPressed(new LEDRingToggle());
+    	rightBumper2.whenPressed(new ToggleGearIntakeUpDown());
     	leftTrigger2.whenPressed(new HopperOut());
     	rightTrigger2.whenPressed(new HopperIn());
-    	
-    	//buttonA2.whenPressed(new BumpTest("blue"));
+    	    	//buttonA2.whenPressed(new BumpTest("blue"));
     	//buttonB2.whenPressed(new BumpTest("red"));
     	
     	//rightBumper2.whenPressed(new FollowChezyPath("hopperPath",true,false,-1,0));

@@ -53,9 +53,10 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 	{
 		m_lastEncoders = lastEncoder;
 	}*/
-	private static double m_kP = 0.007;//0.007
-	private static double m_kI = 0.00025;//0.0001;
-	private static double m_kD = 0.00225;//0.001;
+	private static double m_kP = 0.007;
+	private static double m_kI = 0.00025;
+	private static double m_kD = 0.0025;
+	private static double m_kF = 0;//2.5;
 	public double m_testSetPoint = 0.0;
 	double encoderNow;
 	long timeNow;
@@ -72,7 +73,7 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
 	
     // Initialize your subsystem here
     public FlywheelPID() {
-    	super(m_kP,m_kI,m_kD,0.025);
+    	super(m_kP,m_kI,m_kD,.025,m_kF);
     	setSetpoint(0.0);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
@@ -146,7 +147,10 @@ public class FlywheelPID extends PIDSubsystem  implements LogDataSource {
     		m_expectedMotorLevel = (m_expectedMotorLevel + m_flywheelMotor1.get()) / 2;
     	}*/
     	m_atSpeed = Math.abs(m_velocity-getSetpoint()) < m_atSpeedTolerance;
-    	return m_velocity;
+
+		SmartDashboard.putNumber("WHEEL SPEED BITCH", m_velocity);
+		
+		return m_velocity;
     	//encoder delta (velocity)
     }
 

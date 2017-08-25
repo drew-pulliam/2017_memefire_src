@@ -40,17 +40,17 @@ public class AutoGearSide1 extends CommandGroup {
         	addSequential(new FollowChezyPath("sideGearPath", true, true,1,0));//true,-1 turns left, right side longer distance
         	addSequential(new Delay(10));
         	addSequential(new EjectGear());
-        	addSequential(new FollowChezyPath("sideGearDownfieldPath0", true, true,1,0));
-        	addSequential(new AutonomousTurnSimple(-45));
-        	addSequential(new FollowChezyPath("sideGearDownfieldPath1", true, true,1,0));
+        	//addSequential(new FollowChezyPath("sideGearDownfieldPath0", true, true,1,0));
+        	//addSequential(new AutonomousTurnSimple(-45));
+        	//addSequential(new FollowChezyPath("sideGearDownfieldPath1", true, true,1,0));
         	//addSequential(new FollowChezyPath("sideGearPathweird", true, true,1,Gyro.getYaw()));//true,-1 turns left, right side longer distance
     	}else{
         	addSequential(new FollowChezyPath("sideGearPath", true, false,-1,0));
         	addSequential(new Delay(10));
         	addSequential(new EjectGear());
-        	addSequential(new FollowChezyPath("sideGearDownfieldPath0", true, false,-1,0));
-        	addSequential(new AutonomousTurnSimple(45));
-        	addSequential(new FollowChezyPath("sideGearDownfieldPath1", true, false,-1,0));
+        	//addSequential(new FollowChezyPath("sideGearDownfieldPath0", true, false,-1,0));
+        	//addSequential(new AutonomousTurnSimple(45));
+        	//addSequential(new FollowChezyPath("sideGearDownfieldPath1", true, false,-1,0));
         	//addSequential(new FollowChezyPath("sideGearPathweird", true, false,-1,Gyro.getYaw()));//true,-1 turns left, right side longer distance
     	}
     	//addSequential(new AutonomousTurnToAngleSimple(angle));

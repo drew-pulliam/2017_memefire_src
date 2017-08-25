@@ -15,43 +15,27 @@ public class AutoHopper extends CommandGroup {
     	}else{
     		blue = false;
     	}
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    	//addSequential(new AutonomousDriveStraightDistance(100, 0.55));
-    	//addSequential(new BallIntakeDown());
     	if(blue){
         	addSequential(new BallIntakeDown());
-        	addSequential(new FollowChezyPath("hopperPath",true,false,-1,0));
-        	addSequential(new ToggleFlywheelRunning(true, 3020));
-        	addSequential(new AutonomousTurnSimple(-20));
-        	addSequential(new HopperOut());
-        	addSequential(new Delay(10));
-        	addSequential(new AutonomousTurnSimple(15));
-        	addSequential(new ShootBalls(true));
+        	addSequential(new FollowChezyPath("hopperPath",false,true,-1,0));
+        	//addSequential(new DriveForwardSlowHopper());
+        	addSequential(new Delay(70));
+        	//addSequential(new ToggleFlywheelRunning(true, 3020));
+        	addSequential(new FollowChezyPath("hopperPath2",false,true,-1,0));
+        	addSequential(new AutonomousTurnSimple(-80));
+        	addSequential(new AimAndShoot());
+        	//addSequential(new ShootBalls(true));
         	//addSequential(new Vision());
     	}else{
         	addSequential(new BallIntakeDown());
-        	addSequential(new FollowChezyPath("hopperPath",true,true,1,0));
-        	addSequential(new ToggleFlywheelRunning(true, 3020));
-        	addSequential(new AutonomousTurnSimple(20));
-        	addSequential(new HopperOut());
-        	addSequential(new Delay(10));
-        	addSequential(new AutonomousTurnSimple(-15));
-        	addSequential(new ShootBalls(true));
+        	addSequential(new FollowChezyPath("hopperPath",false,false,1,0));
+        	//addSequential(new DriveForwardSlowHopper());
+        	addSequential(new Delay(70));
+        	//addSequential(new ToggleFlywheelRunning(true, 3020));
+        	addSequential(new FollowChezyPath("hopperPath2",false,false,1,0));
+        	addSequential(new AutonomousTurnSimple(80));
+        	addSequential(new AimAndShoot());
+        	//addSequential(new ShootBalls(true));
         	//addSequential(new Vision());
     	}
     	//addSequential(new Shoot());

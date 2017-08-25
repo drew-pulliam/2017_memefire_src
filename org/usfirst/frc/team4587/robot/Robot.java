@@ -375,7 +375,7 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		*/
 		autonomousCommand = new AutoHopper("blue");
 		//autonomousCommand = new Auto1678("blue");
-	//	autonomousCommand = new AutoGearSide1("left");
+		//autonomousCommand = new AutoGearSide1("right");
 		//autonomousCommand = new AutoMobility();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -474,6 +474,8 @@ public class Robot extends IterativeRobot implements LogDataSource {
 		SmartDashboard.putBoolean("posSwitch2", m_posSwitch2.get());
 		SmartDashboard.putBoolean("normalFancySwitch", m_normalFancySwitch.get());
 		SmartDashboard.putNumber("d-pad", m_oi.getPOV());
+		
+		
 		/*
 		SmartDashboard.putNumber("Turret Encoder", m_turret.getEncoder());
 		SmartDashboard.putNumber("Turret Degrees", m_turret.getDegrees());

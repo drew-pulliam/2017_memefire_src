@@ -28,7 +28,7 @@ public class Shoot extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new ToggleFlywheelRunning(true, 2970));
+    	addSequential(new ToggleFlywheelRunning(true, 3020));
     	addSequential(new DelayUntilSpedUp());
     	addSequential(new ShootBalls(true));
     	addSequential(new Delay(100));

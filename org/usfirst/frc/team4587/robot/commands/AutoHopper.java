@@ -18,22 +18,24 @@ public class AutoHopper extends CommandGroup {
     	if(blue){
         	addSequential(new BallIntakeDown());
         	addSequential(new FollowChezyPath("hopperPath",false,true,-1,0));
+        	addSequential(new BallIntakeUp());
         	//addSequential(new DriveForwardSlowHopper());
         	addSequential(new Delay(70));
         	//addSequential(new ToggleFlywheelRunning(true, 3020));
-        	addSequential(new FollowChezyPath("hopperPath2",false,true,-1,0));
-        	addSequential(new AutonomousTurnSimple(-80));
+        	addSequential(new FollowChezyPath("hopperPath2",false,true,-1,Gyro.getYaw()));
+        	addSequential(new AutonomousTurnSimple(-60));
         	addSequential(new AimAndShoot());
         	//addSequential(new ShootBalls(true));
         	//addSequential(new Vision());
     	}else{
         	addSequential(new BallIntakeDown());
         	addSequential(new FollowChezyPath("hopperPath",false,false,1,0));
+        	addSequential(new BallIntakeUp());
         	//addSequential(new DriveForwardSlowHopper());
         	addSequential(new Delay(70));
         	//addSequential(new ToggleFlywheelRunning(true, 3020));
-        	addSequential(new FollowChezyPath("hopperPath2",false,false,1,0));
-        	addSequential(new AutonomousTurnSimple(80));
+        	addSequential(new FollowChezyPath("hopperPath2",false,false,1,Gyro.getYaw()));
+        	addSequential(new AutonomousTurnSimple(60));
         	addSequential(new AimAndShoot());
         	//addSequential(new ShootBalls(true));
         	//addSequential(new Vision());

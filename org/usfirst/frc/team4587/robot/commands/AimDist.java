@@ -18,7 +18,7 @@ import utility.Gyro;
 public class AimDist extends Command {
 	private double height;
 	private double[] values;
-	private int desiredHeight=120;//120
+	private int desiredHeight=119;//120
 	double tolerance = 5;
 	double maxSpeed = 0.2;
 	int count;
